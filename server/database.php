@@ -195,13 +195,13 @@ class Database
     }
 
     // helper methods
-    public function verifyUser($user, $password)
+    private function verifyUser($user, $password)
     {
         //echo var_dump($user);
         return password_verify($password, $user->getPassword());
     }
 
-    public function buildQueryTail($sql, $keys, $conjunction)
+    private function buildQueryTail($sql, $keys, $conjunction)
     {
         $sql = $sql . " WHERE";
         foreach ($keys as $key => $values) {
