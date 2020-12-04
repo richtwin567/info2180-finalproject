@@ -13,7 +13,12 @@
 
 <body>
     <header>
-        <!-- Top Nav -->
+        <ul>
+            <li><img src='assets/bug_report-white-18dp.svg' alt='bug'></li>
+            <li>
+                <h2>BugMe Issue Tracker</h2>
+            </li>
+        </ul>
     </header>
     <aside>
         <!-- Sidebar -->
@@ -26,12 +31,11 @@
             </ul>
         </div>
     </aside>
-
     <!-- Dynamic Content goes here -->
     <div id='grid-wrapper'>
         <main>
             <!-- Form for adding the user -->
-            <form id='register-user' class='hidden'>
+            <form id='register-user' class=''>
                 <h1>
                     New User
                 </h1>
@@ -46,7 +50,7 @@
                 <input type='submit' value='Submit' class='btn'>
             </form>
             <!-- Form for Login -->
-            <form action="" method="post">
+            <form action="" method="post" class='hidden'>
                 <h1>Login</h1>
                 <input type="email" name="email" placeholder=" User Name" class="input-field" required>
                 <input type="password" name="password" placeholder=" Password" class="input-field" required>

@@ -18,7 +18,7 @@
 
 main {
     grid-column-start: 2;
-    margin: 0 30px;
+    margin: 40px 30px;
 }
 
 
@@ -44,6 +44,24 @@ aside {
 
 #sidebar-contents img {
     margin-right: 10px;
+}
+
+
+/* Styling the main nav bar */
+
+header {
+    background-color: black;
+    color: white;
+}
+
+header img {
+    height: 50px;
+    margin: 10px 20px;
+}
+
+header ul {
+    display: flex;
+    align-items: center;
 }
 
 
