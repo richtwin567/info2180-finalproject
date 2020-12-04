@@ -27,7 +27,7 @@ switch ($path) {
 
                 $data = json_decode(file_get_contents("php://input"), true);
                 $result = $db->addIssue($data);
-                if ($result != null) {
+                if ($result !== null) {
                     http_response_code(200);
                     echo "1";
                 } else {
@@ -42,7 +42,7 @@ switch ($path) {
             case 'GET':
                 setHeaders();
                 $result = $db->getIssues($_GET);
-                if ($result != null) {
+                if ($result !== null) {
                     http_response_code(200);
                     echo $result;
                 } else {
@@ -66,7 +66,7 @@ switch ($path) {
                 $data = json_decode(file_get_contents("php://input"), true);
                 $result = $db->addUser($data);
                 //echo var_dump($res);
-                if ($result != null) {
+                if ($result !== null) {
                     http_response_code(200);
                     echo "1";
                 } else {
@@ -79,9 +79,14 @@ switch ($path) {
                 setHeaders();
                 //echo var_dump($_GET);
                 $result = $db->getUsers($_GET);
-                if ($result != null) {
-                    http_response_code(200);
-                    echo $result;
+                if ($result !== null) {
+                    if ($result===FALSE) {
+                        http_response_code(409);
+                        echo $result;
+                    } else {
+                        http_response_code(200);
+                        echo $result;
+                    }
                 } else {
                     http_response_code(404);
                 }

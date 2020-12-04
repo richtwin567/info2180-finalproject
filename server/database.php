@@ -57,13 +57,15 @@ class Database
     // GET methods
     public function getUsers($keys = array())
     {
-        //echo "get";
         try {
             $sql = "SELECT * FROM `users`";
             if (!empty($keys)) {
+                if (isset($keys["password"])) {
+                    $pass = $keys["password"];
+                    unset($keys["password"]);
+                }
                 //$ids = $ids["id"];
                 $sql = $sql . " WHERE";
-
                 foreach ($keys as $key => $values) {
                     if (is_array($values)) {
                         foreach ($values as $value) {
@@ -75,7 +77,6 @@ class Database
                     }
                 }
                 $sql = substr($sql, 0, -3);
-
             }
             $sql = $sql . ";";
             //echo $sql;
@@ -86,7 +87,16 @@ class Database
                 $userList = array();
                 foreach ($results as $row) {
                     $user = new User($row["id"], $row["firstname"], $row["lastname"], $row["password"], $row["email"], $row["date_joined"]);
-                    array_push($userList, $user->toJSON());
+                    if ($pass != null) {
+                        if ($this->verifyUser($user, $pass)) {
+                            array_push($userList, $user->toJSON());
+                        } else {
+                            return FALSE;
+                        }
+                    }else{
+                        //echo "no pass";
+                        array_push($userList, $user->toJSON());
+                    }
                 }
                 return json_encode($userList);
             } else {
@@ -174,7 +184,16 @@ class Database
         }
     }
 
-    function verifyUser()
+    // PATCH requests
+
+    public function updateIssue($data)
     {
+    }
+
+    // helper methods
+    public function verifyUser($user, $password)
+    {
+        //echo var_dump($user);
+        return password_verify($password, $user->getPassword());
     }
 }
