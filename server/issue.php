@@ -94,4 +94,44 @@ class Issue
     {
         return $this->updated;
     }
+
+    public function setUpdated()
+    {
+        $this->updated = date("Y-m-d H:i:s");
+    }
+
+    public function toJSON()
+    {
+        return get_object_vars($this);
+    }
+    
+    public function __serialize()
+    {
+        return array(
+            'id' => $this->getID(),
+            'title' => $this->getTitle(),
+            'description' => $this->getDescription(),
+            'type' => $this->getType(),
+            'priority' => $this->getPriority(),
+            'status' => $this->getStatus(),
+            'assigned_to' => $this->getAssignedTo(),
+            'created_by' => $this->getCreated(),
+            'created' => $this->getCreated(),
+            'updated' => $this->getUpdated()
+        );
+    }
+
+    public function __unserialize($data)
+    {
+        $this->id = $data["id"];
+        $this->title = $data["title"];
+        $this->description = $data["description"];
+        $this->type = $data["type"];
+        $this->priority = $data["priority"];
+        $this->status = $data["status"];
+        $this->assigned_to = $data["assigned_to"];
+        $this->created_by = $data["created_by"];
+        $this->created = $data["created"];
+        $this->updated = $data["updated"];
+    }
 }

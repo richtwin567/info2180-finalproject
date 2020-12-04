@@ -51,4 +51,31 @@ class User
     {
         return $this->date_joined;
     }
+
+    public function toJSON()
+    {
+        return get_object_vars($this);
+    }
+    
+    public function __serialize()
+    {
+        return array(
+            'id' => $this->getID(),
+            'firstname' => $this->getFirstName(),
+            'lastname' => $this->getLastName(),
+            'password' => $this->getPassword(),
+            'email' => $this->getEmail(),
+            'date_joined' => $this->getDateJoined()
+        );
+    }
+
+    public function __unserialize($data)
+    {
+        $this->id = $data["id"];
+        $this->firstname = $data["firstname"];
+        $this->lastname = $data["lastname"];
+        $this->password = $data["password"];
+        $this->email = $data["email"];
+        $this->date_joined = $data["date_joined"];
+    }
 }
