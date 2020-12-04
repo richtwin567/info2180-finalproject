@@ -64,19 +64,7 @@ class Database
                     $pass = $keys["password"];
                     unset($keys["password"]);
                 }
-                //$ids = $ids["id"];
-                $sql = $sql . " WHERE";
-                foreach ($keys as $key => $values) {
-                    if (is_array($values)) {
-                        foreach ($values as $value) {
-                            //echo var_dump($id);
-                            $sql = $sql . " $key='$value' OR";
-                        }
-                    } else {
-                        $sql = $sql . " $key='$values' OR";
-                    }
-                }
-                $sql = substr($sql, 0, -3);
+                $sql = $this->buildQueryTail($sql,$keys,"OR");
             }
             $sql = $sql . ";";
             //echo $sql;
@@ -93,7 +81,7 @@ class Database
                         } else {
                             return FALSE;
                         }
-                    }else{
+                    } else {
                         //echo "no pass";
                         array_push($userList, $user->toJSON());
                     }
@@ -113,11 +101,7 @@ class Database
         try {
             $sql = "SELECT * FROM `issues`";
             if (!empty($json)) {
-                $sql = $sql . " WHERE";
-                foreach ($json as $key => $value) {
-                    $sql = $sql . " $key='$value' AND";
-                }
-                $sql = substr($sql, 0, -4);
+                $sql = $this->buildQueryTail($sql,$json,"AND");
             }
             $sql = $sql . ";";
             //echo $sql;
@@ -153,7 +137,7 @@ class Database
         $hashed_pass = password_hash($user->getPassword(), PASSWORD_DEFAULT);
         $userquery = "INSERT INTO `users` (`id`, `firstname`, `lastname`, `password`, `email`, `date_joined`) VALUES ('{$user->getID()}', '{$user->getFirstName()}', '{$user->getLastName()}', '$hashed_pass', '{$user->getEmail()}', '{$user->getDateJoined()}');";
         $result = $this->conn->query($userquery);
-        if ($result == FALSE) {
+        if ($result === FALSE) {
             return null;
         } else {
             return TRUE;
@@ -177,7 +161,7 @@ class Database
         );
         $issuequery = "INSERT INTO `issues` (`id`, `title`, `description`, `type`, `priority`, `status`, `assigned_to`, `created_by`, `created`, `updated`) VALUES ('{$issue->getID()}', '{$issue->getTitle()}', '{$issue->getDescription()}', '{$issue->getType()}', '{$issue->getPriority()}', '{$issue->getStatus()}', '{$issue->getAssignedTo()}', '{$issue->getCreatedBy()}', '{$issue->getCreated()}','{$issue->getUpdated()}');";
         $result = $this->conn->query($issuequery);
-        if ($result == FALSE) {
+        if ($result === FALSE) {
             return null;
         } else {
             return TRUE;
@@ -186,8 +170,28 @@ class Database
 
     // PATCH requests
 
-    public function updateIssue($data)
+    public function updateIssue($data, $query)
     {
+        $issue = json_decode($this->getIssues($query),true);
+        $issue = $issue[0];
+        echo var_dump($issue);
+        $sql = "UPDATE `issues` SET";
+        foreach ($issue as $key => $value) {
+            if(isset($data[$key])){
+                $issue[$key] = filter_var($data[$key],FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $sql = $sql." `$key` = '{$issue[$key]}',";
+            }
+        }
+        $sql = substr($sql,0,-1);
+        $sql = $this->buildQueryTail($sql,$query,"AND");
+        $sql = $sql.";";
+        $result= $this->conn->query($sql);
+        if ($result === FALSE) {
+            return null;
+        } else {
+            return TRUE;
+        }
+
     }
 
     // helper methods
@@ -195,5 +199,22 @@ class Database
     {
         //echo var_dump($user);
         return password_verify($password, $user->getPassword());
+    }
+
+    public function buildQueryTail($sql, $keys, $conjunction)
+    {
+        $sql = $sql . " WHERE";
+        foreach ($keys as $key => $values) {
+            if (is_array($values)) {
+                foreach ($values as $value) {
+                    //echo var_dump($id);
+                    $sql = $sql . " $key='$value' $conjunction";
+                }
+            } else {
+                $sql = $sql . " $key='$values' $conjunction";
+            }
+        }
+        $sql = substr($sql, 0, -1-strlen($conjunction));
+        return $sql;
     }
 }

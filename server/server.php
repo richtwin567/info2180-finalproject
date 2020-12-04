@@ -22,6 +22,8 @@ if ($request == 'OPTIONS') {
 switch ($path) {
     case '/issues':
         switch ($request) {
+
+
             case 'POST':
                 setHeaders();
 
@@ -35,10 +37,21 @@ switch ($path) {
                     echo "2";
                 }
                 break;
+
+
             case 'PATCH':
                 $data = json_decode(file_get_contents("php://input"), true);
-
+                $result = $db->updateIssue($data, $_GET);
+                if ($result !== null) {
+                    http_response_code(200);
+                    echo "1";
+                } else {
+                    http_response_code(422);
+                    echo "2";
+                }
                 break;
+
+
             case 'GET':
                 setHeaders();
                 $result = $db->getIssues($_GET);
@@ -52,15 +65,15 @@ switch ($path) {
                 break;
 
             default:
-
                 http_response_code(400);
-
                 break;
         }
         break;
 
     case '/users':
         switch ($request) {
+
+
             case 'POST':
                 setHeaders();
                 $data = json_decode(file_get_contents("php://input"), true);
@@ -75,13 +88,15 @@ switch ($path) {
                 }
                 die();
                 break;
+
+
             case 'GET':
                 setHeaders();
                 //echo var_dump($_GET);
                 $result = $db->getUsers($_GET);
                 if ($result !== null) {
-                    if ($result===FALSE) {
-                        http_response_code(409);
+                    if ($result === FALSE) {
+                        http_response_code(401);
                         echo $result;
                     } else {
                         http_response_code(200);
@@ -92,6 +107,8 @@ switch ($path) {
                 }
                 die();
                 break;
+
+                
             default:
                 http_response_code(400);
                 die();
