@@ -1,15 +1,119 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <script src="" async defer></script>
-    </body>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./styles/style.css">
+    <script src="./scripts/app.js"></script>
+</head>
+
+<body>
+    <header>
+        <!-- Top Nav -->
+    </header>
+    <aside>
+        <!-- Sidebar -->
+        <div id='sidebar-contents'>
+            <ul>
+                <li id='home'>Home</li>
+                <li id='add-user'>Add User</li>
+                <li id='add-issue'>New Issue</li>
+                <li id='logout'>Logout</li>
+            </ul>
+        </div>
+    </aside>
+    <!-- Dynamic Content goes here -->
+    <div id='grid-wrapper'>
+        <main>
+            <!-- Form for adding the user -->
+            <form id='register-user' class=''>
+                <h1>
+                    New User
+                </h1>
+                <label for='firstname'>First Name</label>
+                <input type='text' id='firstname' class='input-field' pattern='^[a-zA-Z]+$' title='Uppercase and/or lower case letters'>
+                <label for='lastname'>Last Name</label>
+                <input type='text' id='lastname' class='input-field' pattern='^[a-zA-Z]+$' title='Uppercase and/or lower case letters'>
+                <label for='password'>Password</label>
+                <input type='password' class='input-field' id='password'>
+                <label for='email'>Email</label>
+                <input type='email' class='input-field' id='email'>
+                <input type='submit' value='Submit' class='btn'>
+            </form>
+            <!-- Form for the issues creation -->
+            <form id='issue-creation' class=''>
+                <h1>
+                    Create Issue
+                </h1>
+                <label for='title'>Title</label>
+                <input type='text' class='input-field' id='title'>
+                <label for='description'>Description</label>
+                <textarea id='description' class='input-field'></textarea>
+                <label for='assigned_to'>Assigned To</label>
+                <select id='assigned_to'></select>
+                <label for='type'>Type</label>
+                <select id='type'></select>
+                <label for='priority'>Priority</label>
+                <select id='priority'></select>
+                <input type='submit' value='Submit' class='btn'>
+            </form>
+            <!-- Section for the issues page -->
+            <div id='issues'>
+                <div id='issues-header'>
+                    <h1>Issues</h1>
+                    <button id='new-issue' class='btn'>Create New Issue</button>
+                </div>
+                <ul>
+                    <li>Filter By: </li>
+                    <li class='filter-option'>All</li>
+                    <li class='filter-option'>Open</li>
+                    <li class='filter-option'>My Tickets</li>
+                </ul>
+                <table>
+                    <tr id='table-header'>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th id='issue-status'>Status</th>
+                        <th>Assigned To</th>
+                        <th>Created</th>
+                    </tr>
+                    <!-- Dynamically insert rows here -->
+                    <tr>
+                        <td>#100 <a href='' class='issue'>Implement issue creation</a></td>
+                        <td>Bug</td>
+                        <td>
+                            <p class='open'>Open</p>
+                        </td>
+                        <td>Maria Anders</td>
+                        <td>2019-11-01</td>
+                    </tr>
+                    <tr>
+                        <td>#100 <a href='' class='issue'>Implement issue creation</a></td>
+                        <td>Bug</td>
+                        <td>
+                            <p class='closed'>Closed</p>
+                        </td>
+                        <td>Maria Anders</td>
+                        <td>2019-11-01</td>
+                    </tr>
+                    <tr>
+                        <td>#100 <a href='' class='issue'>Implement issue creation</a></td>
+                        <td>Bug</td>
+                        <td>
+                            <p class='in-progress'>In Progress</p>
+                        </td>
+                        <td>Maria Anders</td>
+                        <td>2019-11-01</td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+
 </html>
