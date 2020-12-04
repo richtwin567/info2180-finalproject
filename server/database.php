@@ -118,15 +118,37 @@ class Database
         }
     }
 
-    public function addUser($user)
+
+    public function addUser($data)
     {
+        $user = new User(
+            intval(filter_var(htmlspecialchars($data["id"]), FILTER_SANITIZE_NUMBER_INT)),
+            filter_var($data["firstname"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["lastname"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["password"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["email"], FILTER_SANITIZE_EMAIL),
+            filter_var($data["data_joined"], FILTER_SANITIZE_FULL_SPECIAL_CHARS)
+        );
         $hashed_pass = password_hash($user->getPassword(), PASSWORD_DEFAULT);
         $userquery = "INSERT INTO `users` (`id`, `firstname`, `lastname`, `password`, `email`, `date_joined`) VALUES (NULL, '{$user->getFirstName()}', '{$user->getLastName()}', '$hashed_pass', '{$user->getEmail()}', '{$user->getDateJoined()}');";
         $this->conn->query($userquery);
     }
 
-    public function addIssue($issue)
+
+    public function addIssue($data)
     {
+        $issue = new Issue(
+            intval(filter_var(htmlspecialchars($data["id"]), FILTER_SANITIZE_NUMBER_INT)),
+            filter_var($data["title"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["description"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["type"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["priority"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["status"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["assigned_to"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["created_by"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["created"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["updated"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+        );
         $issuequery = "INSERT INTO `issues` (`id`, `title`, `description`, `type`, `priority`, `status`, `assigned_to`, `created_by`, `created`, `updated`) VALUES (NULL, '{$issue->getTitle()}', '{$issue->getDescription()}', '{$issue->getType()}', '{$issue->getPriority()}', '{$issue->getStatus()}', '{$issue->getAssignedTo()}', '{$issue->getCreatedBy()}', '{$issue->getCreated()}','{$issue->getUpdated()}');";
         $this->conn->query($issuequery);
     }

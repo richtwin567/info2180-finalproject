@@ -23,11 +23,11 @@ switch ($path) {
     case '/issues':
         switch ($request) {
             case 'POST':
-                $data = json_decode(file_get_contents("php://input"));
-
+                $data = json_decode(file_get_contents("php://input"), true);
+                $db->addIssue($data);
                 break;
             case 'PATCH':
-                $data = json_decode(file_get_contents("php://input"));
+                $data = json_decode(file_get_contents("php://input"), true);
 
                 break;
             case 'GET':
@@ -43,7 +43,9 @@ switch ($path) {
                 break;
 
             default:
-                # code...
+
+                http_response_code(400);
+
                 break;
         }
         break;
@@ -51,8 +53,9 @@ switch ($path) {
     case '/users':
         switch ($request) {
             case 'POST':
-                $data = json_decode(file_get_contents("php://input"));
-
+                $data = json_decode(file_get_contents("php://input"), true);
+                $db->addUser($data);
+                die();
                 break;
             case 'GET':
                 setHeaders();
@@ -64,15 +67,18 @@ switch ($path) {
                 } else {
                     http_response_code(404);
                 }
+                die();
                 break;
             default:
-                # code...
+                http_response_code(400);
+                die();
                 break;
         }
         break;
 
     default:
-        # code...
+        http_response_code(400);
+        die();
         break;
 }
 
