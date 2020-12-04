@@ -9,6 +9,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./styles/style.css">
+    <script src="./scripts/app.js"></script>
 </head>
 
 <body>
@@ -18,42 +19,85 @@
     <aside>
         <!-- Sidebar -->
     </aside>
+    <!-- Dynamic Content goes here -->
     <main>
-        <form>
-            <!-- Temporarily placing barebones forms to be added to php later -->
-            <!-- Dynamic Content goes here -->
+        <!-- Form for adding the user -->
+        <form id='add-user' class='hidden'>
             <h1>
                 New User
             </h1>
-            <label for='fname'>First Name</label>
-            <input type='text' id='fname' class='input-field' pattern='^[a-zA-Z]+$' title='Uppercase and/or lower case letters'>
-            <label for='lname'>Last Name</label>
-            <input type='text' id='lname' class='input-field' pattern='^[a-zA-Z]+$' title='Uppercase and/or lower case letters'>
+            <label for='firstname'>First Name</label>
+            <input type='text' id='firstname' class='input-field' pattern='^[a-zA-Z]+$' title='Uppercase and/or lower case letters'>
+            <label for='lastname'>Last Name</label>
+            <input type='text' id='lastname' class='input-field' pattern='^[a-zA-Z]+$' title='Uppercase and/or lower case letters'>
             <label for='password'>Password</label>
             <input type='password' class='input-field' id='password'>
             <label for='email'>Email</label>
             <input type='email' class='input-field' id='email'>
-            <input type='submit' value='Submit' class='submitbtn'>
+            <input type='submit' value='Submit' class='btn'>
         </form>
-        <form id='issue-creation'>
+        <!-- Form for the issues creation -->
+        <form id='issue-creation' class='hidden'>
             <h1>
                 Create Issue
             </h1>
-            <label for='issue-title'>Title</label>
-            <input type='text' class='input-field' id='issue-title'>
-            <label for='issue-description'>Description</label>
-            <textarea id='issue-description' class='input-field'></textarea>
-            <label for='assignee'>Assigned To</label>
-            <select id='assignee'>
+            <label for='title'>Title</label>
+            <input type='text' class='input-field' id='title'>
+            <label for='description'>Description</label>
+            <textarea id='description' class='input-field'></textarea>
+            <label for='assigned_to'>Assigned To</label>
+            <select id='assigned_to'>
             </select>
-            <label for='issue-type'>Type</label>
-            <select id='issue-type'></select>
-            <label for='issue-priority'>Priority</label>
-            <select id='issue-priority'></select>
-            <input type='submit' value='Submit' class='submitbtn'>
+            <label for='type'>Type</label>
+            <select id='type'></select>
+            <label for='priority'>Priority</label>
+            <select id='priority'></select>
+            <input type='submit' value='Submit' class='btn'>
         </form>
+        <!-- Section for the issues page -->
+        <div id='issues'>
+            <div id='issues-header'>
+                <h1>Issues</h1>
+                <button id='new-issue' class='btn'>Create New Issue</button>
+            </div>
+            <ul>
+                <li>Filter By: </li>
+                <li class='filter-option'>ALL</li>
+                <li class='filter-option'>OPEN</li>
+                <li class='filter-option'>MY TICKETS</li>
+            </ul>
+            <table>
+                <tr id='table-header'>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Assigned To</th>
+                    <th>Created</th>
+                </tr>
+                <tr>
+                    <td>#100 <a href='' class='issue'>Implement issue creation</a></td>
+                    <td>Bug</td>
+                    <td>Closed</td>
+                    <td>Maria Anders</td>
+                    <td>2019-11-01</td>
+                </tr>
+                <tr>
+                    <td>#100 <a href='' class='issue'>Implement issue creation</a></td>
+                    <td>Bug</td>
+                    <td>Closed</td>
+                    <td>Maria Anders</td>
+                    <td>2019-11-01</td>
+                </tr>
+                <tr>
+                    <td>#100 <a href='' class='issue'>Implement issue creation</a></td>
+                    <td>Bug</td>
+                    <td>Closed</td>
+                    <td>Maria Anders</td>
+                    <td>2019-11-01</td>
+                </tr>
+            </table>
+        </div>
     </main>
-    <script src="" defer></script>
 </body>
 
 </html>
