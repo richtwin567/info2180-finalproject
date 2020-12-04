@@ -130,8 +130,13 @@ class Database
             filter_var($data["data_joined"], FILTER_SANITIZE_FULL_SPECIAL_CHARS)
         );
         $hashed_pass = password_hash($user->getPassword(), PASSWORD_DEFAULT);
-        $userquery = "INSERT INTO `users` (`id`, `firstname`, `lastname`, `password`, `email`, `date_joined`) VALUES (NULL, '{$user->getFirstName()}', '{$user->getLastName()}', '$hashed_pass', '{$user->getEmail()}', '{$user->getDateJoined()}');";
-        $this->conn->query($userquery);
+        $userquery = "INSERT INTO `users` (`id`, `firstname`, `lastname`, `password`, `email`, `date_joined`) VALUES ('{$user->getID()}', '{$user->getFirstName()}', '{$user->getLastName()}', '$hashed_pass', '{$user->getEmail()}', '{$user->getDateJoined()}');";
+        $result = $this->conn->query($userquery);
+        if($result == FALSE){
+            return FALSE;
+        }else{
+            return TRUE;
+        }
     }
 
 
@@ -149,8 +154,13 @@ class Database
             filter_var($data["created"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             filter_var($data["updated"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
         );
-        $issuequery = "INSERT INTO `issues` (`id`, `title`, `description`, `type`, `priority`, `status`, `assigned_to`, `created_by`, `created`, `updated`) VALUES (NULL, '{$issue->getTitle()}', '{$issue->getDescription()}', '{$issue->getType()}', '{$issue->getPriority()}', '{$issue->getStatus()}', '{$issue->getAssignedTo()}', '{$issue->getCreatedBy()}', '{$issue->getCreated()}','{$issue->getUpdated()}');";
-        $this->conn->query($issuequery);
+        $issuequery = "INSERT INTO `issues` (`id`, `title`, `description`, `type`, `priority`, `status`, `assigned_to`, `created_by`, `created`, `updated`) VALUES ('{$issue->getID()}', '{$issue->getTitle()}', '{$issue->getDescription()}', '{$issue->getType()}', '{$issue->getPriority()}', '{$issue->getStatus()}', '{$issue->getAssignedTo()}', '{$issue->getCreatedBy()}', '{$issue->getCreated()}','{$issue->getUpdated()}');";
+        $result = $this->conn->query($issuequery);
+        if($result == FALSE){
+            return FALSE;
+        }else{
+            return TRUE;
+        }
     }
 
 
