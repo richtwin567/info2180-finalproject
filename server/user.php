@@ -57,25 +57,16 @@ class User
         return get_object_vars($this);
     }
     
-    public function __serialize()
+    public static function buildAndSanitize($data)
     {
-        return array(
-            'id' => $this->getID(),
-            'firstname' => $this->getFirstName(),
-            'lastname' => $this->getLastName(),
-            'password' => $this->getPassword(),
-            'email' => $this->getEmail(),
-            'date_joined' => $this->getDateJoined()
+        $user = new User(
+            intval(filter_var($data["id"], FILTER_SANITIZE_NUMBER_INT)),
+            filter_var($data["firstname"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["lastname"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["password"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["email"], FILTER_SANITIZE_EMAIL),
+            filter_var($data["date_joined"], FILTER_SANITIZE_FULL_SPECIAL_CHARS)
         );
-    }
-
-    public function __unserialize($data)
-    {
-        $this->id = $data["id"];
-        $this->firstname = $data["firstname"];
-        $this->lastname = $data["lastname"];
-        $this->password = $data["password"];
-        $this->email = $data["email"];
-        $this->date_joined = $data["date_joined"];
+        return $user;
     }
 }
