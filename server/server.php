@@ -63,7 +63,6 @@ switch ($path) {
         switch ($request) {
             case 'POST':
                 setHeaders();
-
                 $data = json_decode(file_get_contents("php://input"), true);
                 $result = $db->addUser($data);
                 //echo var_dump($res);

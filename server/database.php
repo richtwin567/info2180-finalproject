@@ -1,12 +1,7 @@
 <?php
 include_once("user.php");
-include_once("issue.php");/* 
-include_once("insert_queries.php");
-include_once("delete_queries.php");
-include_once("update_queries.php");
-include_once("get_queries.php"); */
+include_once("issue.php");
 
-// TODO - Potentially rename this file
 class Database
 {
     private $conn;
@@ -38,7 +33,14 @@ class Database
         $schemasql = file_get_contents("../sql/schema.sql", FILE_USE_INCLUDE_PATH);
         //var_dump($schemasql);
         $this->conn->query($schemasql);
-        $initialuser = new User(null, 'John', 'Doe', 'password123', 'admin@project2.com', null);
+        $initialuser = array(
+            "id" => null,
+            "firstname" => 'John',
+            "lastname" => 'Doe',
+            "password" => 'password123',
+            "email" => 'admin@project2.com',
+            "date_joined" => null
+        );
         $this->addUser($initialuser, $this->conn);
     }
 
@@ -52,19 +54,28 @@ class Database
         $this->connect();
     }
 
-    // get methods
-    public function getUsers($ids = array())
+    // GET methods
+    public function getUsers($keys = array())
     {
+        //echo "get";
         try {
             $sql = "SELECT * FROM `users`";
-            if (!empty($ids)) {
-                $ids = $ids["id"];
+            if (!empty($keys)) {
+                //$ids = $ids["id"];
                 $sql = $sql . " WHERE";
-                foreach ($ids as $id) {
-                    //echo var_dump($id);
-                    $sql = $sql . " id='$id' OR";
+
+                foreach ($keys as $key => $values) {
+                    if (is_array($values)) {
+                        foreach ($values as $value) {
+                            //echo var_dump($id);
+                            $sql = $sql . " $key='$value' OR";
+                        }
+                    } else {
+                        $sql = $sql . " $key='$values' OR";
+                    }
                 }
                 $sql = substr($sql, 0, -3);
+
             }
             $sql = $sql . ";";
             //echo $sql;
@@ -118,23 +129,23 @@ class Database
         }
     }
 
-
+    // POST methods
     public function addUser($data)
     {
         $user = new User(
-            intval(filter_var(htmlspecialchars($data["id"]), FILTER_SANITIZE_NUMBER_INT)),
+            intval(filter_var($data["id"], FILTER_SANITIZE_NUMBER_INT)),
             filter_var($data["firstname"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             filter_var($data["lastname"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             filter_var($data["password"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             filter_var($data["email"], FILTER_SANITIZE_EMAIL),
-            filter_var($data["data_joined"], FILTER_SANITIZE_FULL_SPECIAL_CHARS)
+            filter_var($data["date_joined"], FILTER_SANITIZE_FULL_SPECIAL_CHARS)
         );
         $hashed_pass = password_hash($user->getPassword(), PASSWORD_DEFAULT);
         $userquery = "INSERT INTO `users` (`id`, `firstname`, `lastname`, `password`, `email`, `date_joined`) VALUES ('{$user->getID()}', '{$user->getFirstName()}', '{$user->getLastName()}', '$hashed_pass', '{$user->getEmail()}', '{$user->getDateJoined()}');";
         $result = $this->conn->query($userquery);
-        if($result == FALSE){
-            return FALSE;
-        }else{
+        if ($result == FALSE) {
+            return null;
+        } else {
             return TRUE;
         }
     }
@@ -156,15 +167,13 @@ class Database
         );
         $issuequery = "INSERT INTO `issues` (`id`, `title`, `description`, `type`, `priority`, `status`, `assigned_to`, `created_by`, `created`, `updated`) VALUES ('{$issue->getID()}', '{$issue->getTitle()}', '{$issue->getDescription()}', '{$issue->getType()}', '{$issue->getPriority()}', '{$issue->getStatus()}', '{$issue->getAssignedTo()}', '{$issue->getCreatedBy()}', '{$issue->getCreated()}','{$issue->getUpdated()}');";
         $result = $this->conn->query($issuequery);
-        if($result == FALSE){
-            return FALSE;
-        }else{
+        if ($result == FALSE) {
+            return null;
+        } else {
             return TRUE;
         }
     }
 
-
-    // to be moved from this file
     function verifyUser()
     {
     }
