@@ -36,9 +36,7 @@ switch ($path) {
                 if ($result != null) {
                     http_response_code(200);
                     echo $result;
-                    //echo "yes";
                 } else {
-                    //echo "no";
                     http_response_code(404);
                 }
                 die();
@@ -57,7 +55,15 @@ switch ($path) {
 
                 break;
             case 'GET':
-
+                setHeaders();
+                //echo var_dump($_GET);
+                $result = $db->getUsers($_GET);
+                if ($result != null) {
+                    http_response_code(200);
+                    echo $result;
+                } else {
+                    http_response_code(404);
+                }
                 break;
             default:
                 # code...

@@ -53,15 +53,35 @@ class Database
     }
 
     // get methods
-    public function getUser($id)
+    public function getUsers($ids = array())
     {
-        $sql = "SELECT * FROM `users` WHERE id=$id;";
-        $stmt = $this->conn->query($sql);
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if ($results != FALSE && !empty($results)) {
-            $user = new User($results["id"], $results["firstname"], $results["lastname"], $results["password"], $results["email"], $results["date_joined"]);
-            return $user;
-        } else {
+        try {
+            $sql = "SELECT * FROM `users`";
+            if (!empty($ids)) {
+                $ids = $ids["id"];
+                $sql = $sql . " WHERE";
+                foreach ($ids as $id) {
+                    //echo var_dump($id);
+                    $sql = $sql . " id='$id' OR";
+                }
+                $sql = substr($sql, 0, -3);
+            }
+            $sql = $sql . ";";
+            //echo $sql;
+            $stmt = $this->conn->query($sql);
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            //echo var_dump($results);
+            if ($results != FALSE && !empty($results)) {
+                $userList = array();
+                foreach ($results as $row) {
+                    $user = new User($row["id"], $row["firstname"], $row["lastname"], $row["password"], $row["email"], $row["date_joined"]);
+                    array_push($userList, $user->toJSON());
+                }
+                return json_encode($userList);
+            } else {
+                return null;
+            }
+        } catch (Exception $e) {
             return null;
         }
     }
@@ -69,29 +89,33 @@ class Database
 
     public function getIssues($json = array())
     {
-        $sql = "SELECT * FROM `issues`";
-        if (!empty($json)) {
-            $sql = $sql . " WHERE";
-            foreach ($json as $key => $value) {
-                $sql = $sql . " $key='$value' AND";
+        try {
+            $sql = "SELECT * FROM `issues`";
+            if (!empty($json)) {
+                $sql = $sql . " WHERE";
+                foreach ($json as $key => $value) {
+                    $sql = $sql . " $key='$value' AND";
+                }
+                $sql = substr($sql, 0, -4);
             }
-            $sql = substr($sql, 0, -4);
-        }
-        $sql = $sql . ";";
-        //echo $sql;
-        $stmt = $this->conn->query($sql);
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        //echo var_dump($results);
-        if ($results != FALSE && !empty($results)) {
-            $issueList = array();
-            foreach ($results as $row) {
-                $issue = new Issue($row["id"], $row["title"], $row["description"], $row["type"], $row["priority"], $row["status"], $row["assigned_to"], $row["created_by"], $row["created"], $row["updated"]);
-                array_push($issueList, $issue->toJSON());
+            $sql = $sql . ";";
+            //echo $sql;
+            $stmt = $this->conn->query($sql);
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            //echo var_dump($results);
+            if ($results != FALSE && !empty($results)) {
+                $issueList = array();
+                foreach ($results as $row) {
+                    $issue = new Issue($row["id"], $row["title"], $row["description"], $row["type"], $row["priority"], $row["status"], $row["assigned_to"], $row["created_by"], $row["created"], $row["updated"]);
+                    array_push($issueList, $issue->toJSON());
+                }
+                return json_encode($issueList);
+            } else {
+                return null;
             }
-            return json_encode($issueList);
-        } else {
+        } catch (Exception $e) {
             return null;
-        } 
+        }
     }
 
     public function addUser($user)
