@@ -87,6 +87,7 @@ ul {
 
 .filter-option {
     margin: 0 30px;
+    text-transform: uppercase;
 }
 
 .filter-option:hover {
@@ -120,4 +121,40 @@ td {
 
 .issue {
     color: #1288b3
+}
+
+
+/* Styling the issue types */
+
+#issue-status {
+    text-align: center;
+}
+
+.open,
+.closed,
+.in-progress {
+    margin: 0 auto;
+    color: #ffff;
+    padding: 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.open {
+    background-color: #139e4d;
+    width: 30%;
+}
+
+.closed {
+    background-color: #dc6f26;
+    width: 45%;
+}
+
+.in-progress {
+    background-color: #ffdb0c;
+    color: black;
+    width: 70%;
 }

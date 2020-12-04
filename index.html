@@ -46,8 +46,7 @@
             <label for='description'>Description</label>
             <textarea id='description' class='input-field'></textarea>
             <label for='assigned_to'>Assigned To</label>
-            <select id='assigned_to'>
-            </select>
+            <select id='assigned_to'></select>
             <label for='type'>Type</label>
             <select id='type'></select>
             <label for='priority'>Priority</label>
@@ -62,15 +61,15 @@
             </div>
             <ul>
                 <li>Filter By: </li>
-                <li class='filter-option'>ALL</li>
-                <li class='filter-option'>OPEN</li>
-                <li class='filter-option'>MY TICKETS</li>
+                <li class='filter-option'>All</li>
+                <li class='filter-option'>Open</li>
+                <li class='filter-option'>My Tickets</li>
             </ul>
             <table>
                 <tr id='table-header'>
                     <th>Title</th>
                     <th>Type</th>
-                    <th>Status</th>
+                    <th id='issue-status'>Status</th>
                     <th>Assigned To</th>
                     <th>Created</th>
                 </tr>
@@ -78,21 +77,27 @@
                 <tr>
                     <td>#100 <a href='' class='issue'>Implement issue creation</a></td>
                     <td>Bug</td>
-                    <td>Closed</td>
+                    <td>
+                        <p class='open'>Open</p>
+                    </td>
                     <td>Maria Anders</td>
                     <td>2019-11-01</td>
                 </tr>
                 <tr>
                     <td>#100 <a href='' class='issue'>Implement issue creation</a></td>
                     <td>Bug</td>
-                    <td>Closed</td>
+                    <td>
+                        <p class='closed'>Closed</p>
+                    </td>
                     <td>Maria Anders</td>
                     <td>2019-11-01</td>
                 </tr>
                 <tr>
                     <td>#100 <a href='' class='issue'>Implement issue creation</a></td>
                     <td>Bug</td>
-                    <td>Closed</td>
+                    <td>
+                        <p class='in-progress'>In Progress</p>
+                    </td>
                     <td>Maria Anders</td>
                     <td>2019-11-01</td>
                 </tr>
