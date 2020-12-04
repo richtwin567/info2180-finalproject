@@ -73,11 +73,11 @@ class Database
         if (!empty($json)) {
             $sql = $sql . " WHERE";
             foreach ($json as $key => $value) {
-                $sql = $sql . " $key=$value AND";
+                $sql = $sql . " $key='$value' AND";
             }
             $sql = substr($sql, 0, -4);
         }
-        //$sql = $sql . ";";
+        $sql = $sql . ";";
         //echo $sql;
         $stmt = $this->conn->query($sql);
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -88,10 +88,10 @@ class Database
                 $issue = new Issue($row["id"], $row["title"], $row["description"], $row["type"], $row["priority"], $row["status"], $row["assigned_to"], $row["created_by"], $row["created"], $row["updated"]);
                 array_push($issueList, $issue->toJSON());
             }
-            return $issueList;
+            return json_encode($issueList);
         } else {
             return null;
-        }
+        } 
     }
 
     public function addUser($user)

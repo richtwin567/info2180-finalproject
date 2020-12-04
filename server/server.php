@@ -35,11 +35,13 @@ switch ($path) {
                 $result = $db->getIssues($_GET);
                 if ($result != null) {
                     http_response_code(200);
-                    echo json_encode($result);
+                    echo $result;
                     //echo "yes";
+                } else {
+                    //echo "no";
+                    http_response_code(404);
                 }
-                //echo "no";
-                http_response_code(404);
+                die();
                 break;
 
             default:
@@ -73,5 +75,4 @@ function setHeaders()
 {
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
-
 }
