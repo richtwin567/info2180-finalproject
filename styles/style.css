@@ -37,7 +37,13 @@ aside {
 }
 
 #sidebar-contents li {
+    display: flex;
+    align-items: center;
     margin: 30px 0;
+}
+
+#sidebar-contents img {
+    margin-right: 10px;
 }
 
 
