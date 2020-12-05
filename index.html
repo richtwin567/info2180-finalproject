@@ -3,19 +3,19 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./styles/style.css">
-    <script src="scripts/auth.js" defer></script>
+    <script src="scripts/auth.js" defer type="module"></script>
 </head>
 
 <body>
     <header>
         <ul>
-            <li><img src='assets/bug_report-white-18dp.svg' alt='bug'></li>
+            <li><img src="assets/bug_report-white-18dp.svg" alt="bug" /></li>
             <li>
                 <h2>BugMe Issue Tracker</h2>
             </li>
@@ -23,108 +23,148 @@
     </header>
     <aside>
         <!-- Sidebar -->
-        <div id='sidebar-contents'>
+        <div id="sidebar-contents">
             <ul>
-                <li class='sidebar-option' data-number='1'><img src='assets/home-24px.svg' alt='home' class='active'>Home</li>
-                <li class='sidebar-option' data-number='2'><img src='assets/person_add-24px.svg' alt='add-user'>Add User</li>
-                <li class='sidebar-option' data-number='3'><img src='assets/add_circle-24px.svg' alt='add-issue'>New Issue</li>
-                <li id='logout'><img src='assets/power_settings_new-24px.svg' alt='logout'>Logout</li>
+                <li class="sidebar-option" data-number="1">
+                    <img src="assets/home-24px.svg" alt="home" class="active" />Home
+                </li>
+                <li class="sidebar-option" data-number="2">
+                    <img src="assets/person_add-24px.svg" alt="add-user" />Add User
+                </li>
+                <li class="sidebar-option" data-number="3">
+                    <img src="assets/add_circle-24px.svg" alt="add-issue" />New Issue
+                </li>
+                <li id="logout">
+                    <img src="assets/power_settings_new-24px.svg" alt="logout" />Logout
+                </li>
             </ul>
         </div>
     </aside>
     <!-- Dynamic Content goes here -->
-    <div id='grid-wrapper'>
+    <div id="grid-wrapper">
         <main>
             <!-- Form for adding the user -->
-            <form id='register-user' class='content' data-number='2'>
-                <h1>
-                    New User
-                </h1>
-                <label for='firstname'>First Name</label>
-                <input type='text' id='firstname' class='input-field' pattern='^[a-zA-Z]+$' title='Uppercase and/or lower case letters' required>
-                <label for='lastname'>Last Name</label>
-                <input type='text' id='lastname' class='input-field' pattern='^[a-zA-Z]+$' title='Uppercase and/or lower case letters' required>
-                <label for='password'>Password</label>
-                <input type='password' class='input-field' id='password' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title='Must contain at least one number,
-                one uppercase and lowercase letter, and at least 8 or more characters' required>
-                <label for='email'>Email</label>
-                <input type='email' class='input-field' id='email' required>
-                <input type='submit' value='Submit' class='btn'>
+            <form id="register-user" class="content" data-number="2">
+                <h1>New User</h1>
+                <label for="firstname">First Name</label>
+                <input type="text" id="firstname" class="input-field" pattern="^[a-zA-Z]+$" title="Uppercase and/or lower case letters" required />
+                <label for="lastname">Last Name</label>
+                <input type="text" id="lastname" class="input-field" pattern="^[a-zA-Z]+$" title="Uppercase and/or lower case letters" required />
+                <label for="password">Password</label>
+                <input type="password" class="input-field" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number,
+                one uppercase and lowercase letter, and at least 8 or more characters" required />
+                <label for="email">Email</label>
+                <input type="email" class="input-field" id="email" required />
+                <input type="submit" value="Submit" class="btn" />
             </form>
             <!-- Form for Login -->
-            <form id="login-user" action="" method="post" class='content' data-number='1'>
+            <form id="login-user" action="" method="post" class='content' data-number='0'>
                 <h1>Login</h1>
                 <input id="login-email" type="email" name="email" placeholder=" User Name" class="input-field" required>
                 <input id="login-password" type="password" name="password" placeholder=" Password" class="input-field" required>
                 <input type='submit' value='Login' class='btn' id='login-btn'>
             </form>
             <!-- Form for the issues creation -->
-            <form id='issue-creation' class='content' data-number='3'>
-                <h1>
-                    Create Issue
-                </h1>
-                <label for='title'>Title</label>
-                <input type='text' class='input-field' id='title' required>
-                <label for='description'>Description</label>
-                <textarea id='description' class='input-field' required></textarea>
-                <label for='assigned_to'>Assigned To</label>
-                <select id='assigned_to' required></select>
-                <label for='type'>Type</label>
-                <select id='type' required></select>
-                <label for='priority'>Priority</label>
-                <select id='priority' required></select>
-                <input type='submit' value='Submit' class='btn'>
+            <form id="issue-creation" class="content" data-number="3">
+                <h1>Create Issue</h1>
+                <label for="title">Title</label>
+                <input type="text" class="input-field" id="title" required />
+                <label for="description">Description</label>
+                <textarea id="description" class="input-field" required></textarea>
+                <label for="assigned_to">Assigned To</label>
+                <select id="assigned_to" required></select>
+                <label for="type">Type</label>
+                <select id="type" required></select>
+                <label for="priority">Priority</label>
+                <select id="priority" required></select>
+                <input type="submit" value="Submit" class="btn" />
             </form>
             <!-- Section for the issues page -->
             <!-- This area will be toggled with sessions -->
-            <div id='issues' class='content' data-number=''>
-                <div id='issues-header'>
+            <div id="issues" class="content" data-number="1">
+                <div id="issues-header">
                     <h1>Issues</h1>
-                    <button id='new-issue' class='btn'>Create New Issue</button>
+                    <button id="new-issue" class="btn">Create New Issue</button>
                 </div>
                 <ul>
-                    <li>Filter By: </li>
-                    <li class='filter-option'>All</li>
-                    <li class='filter-option'>Open</li>
-                    <li class='filter-option'>My Tickets</li>
+                    <li>Filter By:</li>
+                    <li class="filter-option">All</li>
+                    <li class="filter-option">Open</li>
+                    <li class="filter-option">My Tickets</li>
                 </ul>
                 <table>
-                    <tr id='table-header'>
+                    <tr id="table-header">
                         <th>Title</th>
                         <th>Type</th>
-                        <th id='issue-status'>Status</th>
+                        <th id="issue-status">Status</th>
                         <th>Assigned To</th>
                         <th>Created</th>
                     </tr>
                     <!-- Dynamically insert rows here -->
                     <tr>
-                        <td>#100 <a href='' class='issue'>Implement issue creation</a></td>
+                        <td>
+                            #100 <a href="" class="issue">Implement issue creation</a>
+                        </td>
                         <td>Bug</td>
                         <td>
-                            <p class='open'>Open</p>
+                            <p class="open">Open</p>
                         </td>
                         <td>Maria Anders</td>
                         <td>2019-11-01</td>
                     </tr>
                     <tr>
-                        <td>#100 <a href='' class='issue'>Implement issue creation</a></td>
+                        <td>
+                            #100 <a href="" class="issue">Implement issue creation</a>
+                        </td>
                         <td>Bug</td>
                         <td>
-                            <p class='closed'>Closed</p>
+                            <p class="closed">Closed</p>
                         </td>
                         <td>Maria Anders</td>
                         <td>2019-11-01</td>
                     </tr>
                     <tr>
-                        <td>#100 <a href='' class='issue'>Implement issue creation</a></td>
+                        <td>
+                            #100 <a href="" class="issue">Implement issue creation</a>
+                        </td>
                         <td>Bug</td>
                         <td>
-                            <p class='in-progress'>In Progress</p>
+                            <p class="in-progress">In Progress</p>
                         </td>
                         <td>Maria Anders</td>
                         <td>2019-11-01</td>
                     </tr>
                 </table>
+            </div>
+            <!-- Jobs Details View -->
+            <div id="job-view" class="content">
+                <h1 class="job-title">XSS Vulnerability in Add User Form</h1>
+                <p class="issue-id">Issue #100</p>
+                <div class="issue-info-con">
+                    <div class="issue-desc-con">
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut expedita quis qui sunt magnam! Odio alias ut perspiciatis eum! Nulla dolorum veniam fugit dolores repudiandae. Minus tenetur ipsa quidem soluta. Lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit. Modi laboriosam omnis laborum! Facilis, nisi porro. Blanditiis veniam iure voluptate at eum odio magni reiciendis! Tempore repudiandae perspiciatis beatae velit tempora!
+                        </p>
+                        <p class="issue-update">Issue created on</p>
+                        <p class="issue-update">Last update on</p>
+                    </div>
+                    <div class="issue-meta-con">
+                        <div class="issue-meta">
+                            <h4>Assigned To</h4>
+                            <p class="test">Tom Brandy</p>
+                            <h4>Type</h4>
+                            <p>Proposal</p>
+                            <h4>Priority</h4>
+                            <p>Major</p>
+                            <h4>Status</h4>
+                            <p>Open</p>
+                        </div>
+                        <button class="btn bg1">Mark As Closed</button>
+                        <br />
+                        <button class="btn bg2">Mark In Progress</button>
+                    </div>
+                </div>
             </div>
         </main>
     </div>

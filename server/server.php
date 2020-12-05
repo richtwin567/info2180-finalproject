@@ -76,7 +76,6 @@ switch ($path) {
         }
         break;
 
-
     case '/users':
         switch ($request) {
 
@@ -112,7 +111,6 @@ switch ($path) {
                 }
                 die();
                 break;
-
 
             default:
                 http_response_code(400);
@@ -156,7 +154,6 @@ switch ($path) {
                 break;
         }
         break;
-
 
     default:
         http_response_code(400);

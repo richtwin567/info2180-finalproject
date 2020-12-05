@@ -130,7 +130,7 @@ class Issue
             filter_var($data["assigned_to"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             filter_var($data["created_by"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             filter_var($data["created"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            filter_var($data["updated"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["updated"], FILTER_SANITIZE_FULL_SPECIAL_CHARS)
         );
         return $issue;
     }
