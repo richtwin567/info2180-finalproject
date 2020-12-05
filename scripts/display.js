@@ -7,7 +7,8 @@ function addContentListeners() {
 	let sidebarOptions = document.querySelectorAll(".sidebar-option");
 	for (let option of sidebarOptions) {
 		option.addEventListener("click", function (event) {
-			const eventTarget = event.target;
+            const eventTarget = event.target;
+            console.log(eventTarget);
 			const active = document.querySelector(".active");
 
 			// Remove active class from all elements
@@ -50,7 +51,8 @@ function addContentListeners() {
 
 function loadContent() {
     let allContent = document.querySelectorAll(".content");
-	const active = document.querySelector(".active").parentElement;
+    const active = document.querySelector(".active");
+    console.log(active);
     
 
 	fetch("./server/server.php/session").then((res) => {
