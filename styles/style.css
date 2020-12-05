@@ -9,6 +9,13 @@
 }
 
 
+/* Global styles */
+
+.content:not(:nth-child(4)) {
+    display: none;
+}
+
+
 /* Styling the grid wrapper */
 
 #grid-wrapper {
@@ -44,6 +51,10 @@ aside {
 
 #sidebar-contents img {
     margin: 0 15px;
+}
+
+.sidebar-option {
+    cursor: pointer;
 }
 
 
@@ -126,10 +137,6 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.hidden {
-    display: none;
 }
 
 

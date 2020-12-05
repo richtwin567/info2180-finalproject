@@ -24,9 +24,9 @@
         <!-- Sidebar -->
         <div id='sidebar-contents'>
             <ul>
-                <li id='home'><img src='assets/home-24px.svg' alt='home'>Home</li>
-                <li id='add-user'><img src='assets/person_add-24px.svg' alt='add-user'>Add User</li>
-                <li id='add-issue'><img src='assets/add_circle-24px.svg' alt='add-issue'>New Issue</li>
+                <li class='sidebar-option' data-number='1'><img src='assets/home-24px.svg' alt='home' class='active'>Home</li>
+                <li class='sidebar-option' data-number='2'><img src='assets/person_add-24px.svg' alt='add-user'>Add User</li>
+                <li class='sidebar-option' data-number='3'><img src='assets/add_circle-24px.svg' alt='add-issue'>New Issue</li>
                 <li id='logout'><img src='assets/power_settings_new-24px.svg' alt='logout'>Logout</li>
             </ul>
         </div>
@@ -35,7 +35,7 @@
     <div id='grid-wrapper'>
         <main>
             <!-- Form for adding the user -->
-            <form id='register-user' class=''>
+            <form id='register-user' class='content' data-number='2'>
                 <h1>
                     New User
                 </h1>
@@ -44,20 +44,21 @@
                 <label for='lastname'>Last Name</label>
                 <input type='text' id='lastname' class='input-field' pattern='^[a-zA-Z]+$' title='Uppercase and/or lower case letters' required>
                 <label for='password'>Password</label>
-                <input type='password' class='input-field' id='password' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+                <input type='password' class='input-field' id='password' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title='Must contain at least one number,
+                one uppercase and lowercase letter, and at least 8 or more characters' required>
                 <label for='email'>Email</label>
                 <input type='email' class='input-field' id='email' required>
                 <input type='submit' value='Submit' class='btn'>
             </form>
             <!-- Form for Login -->
-            <form action="" method="post" class='hidden'>
+            <form action="" method="post" class='content' data-number='1'>
                 <h1>Login</h1>
                 <input type="email" name="email" placeholder=" User Name" class="input-field" required>
                 <input type="password" name="password" placeholder=" Password" class="input-field" required>
-                <input type='submit' value='Login' class='btn'>
+                <input type='submit' value='Login' class='btn' id='login-btn'>
             </form>
             <!-- Form for the issues creation -->
-            <form id='issue-creation' class='hidden'>
+            <form id='issue-creation' class='content' data-number='3'>
                 <h1>
                     Create Issue
                 </h1>
@@ -74,7 +75,8 @@
                 <input type='submit' value='Submit' class='btn'>
             </form>
             <!-- Section for the issues page -->
-            <div id='issues' class='hidden'>
+            <!-- This area will be toggled with sessions -->
+            <div id='issues' class='content' data-number=''>
                 <div id='issues-header'>
                     <h1>Issues</h1>
                     <button id='new-issue' class='btn'>Create New Issue</button>
