@@ -1,0 +1,1 @@
+//  This module handles the authentication of users in the application
