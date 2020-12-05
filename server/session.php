@@ -49,8 +49,8 @@ function isLoggedIn()
 /**
  * Fetches the user session data as a JSON string.
  * @return string|false|null Returns a JSON `string` once the retrieval of data was sucessful. 
- * If something goes wrong when trying to convert the data to string, `false` will be returned. If there is no session data because
- * no user is logged in, `null` is returned.
+ * If something goes wrong when trying to convert the data to string, `false` will be returned. 
+ * If there is no session data because no user is logged in, `null` is returned.
  */
 function fetchSessionData()
 {
