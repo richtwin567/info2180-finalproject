@@ -1,38 +1,63 @@
 <?php
+session_start();
 
-require_once('database.php');
+include_once("user.php");
 
-function loginUser($conn) {
-    session_start();
-    if(isset($_POST['Login'])) {
-       if(empty($_POST['email']) || empty($_POST['password'])) {
-            echo 'Please enter your email/password';
-       } else {
-            $query = "select * from user where email='" . $_POST['email'] . "' and password='". $_POST['password'] . "'";
-            $result = mysqli_query($conn, $query);
-
-            if(mysqli_fetch_assoc($result)) {
-                $_SESSION['email']=$_POST['email'];
-                isLoggedIn(true);
-                //Link to dashboard
-            } else {
-                echo "Invalid email/password";
-            }
-       }
+/**
+ * Stores a user object in the session.
+ * @param User $user 
+ * @return bool Returns `true` if the user was stored in the session. 
+ * Returns `false` if a user is already logged in.
+ */
+function loginUser($user)
+{
+    if (!isLoggedIn()) {
+        $_SESSION['user'] = serialize($user);
+        return true;
     } else {
-        echo 'Error in connecting';
+        return false;
     }
 }
 
-function logoutUser() {
-    if(isset($_GET['logout'])) {
-        session_destroy();
-        isLoggedIn(false);
-        //link to Login screen
+/**
+ * Logs the user out if a user was logged in.
+ * @return bool|null Returns true if the logout was sucessful. 
+ * Returns false if the logout failed. Returns null if no user was logged in to be logged out.
+ */
+function logoutUser()
+{
+    if (isLoggedIn()) {
+        return session_destroy();
+    } else {
+        return null;
     }
 }
 
-function isLoggedIn($loggedIn) {
-    return $loggedIn;
+/**
+ * Checks if there is a user currently logged in.
+ * @return bool Returns true id a user is logged in and false if no user is logged in.
+ */
+function isLoggedIn()
+{
+    if (isset($_SESSION['user'])) {
+        return true;
+    } else {
+        return false;
+    }
 }
-?>
+
+/**
+ * Fetches the user session data as a JSON string.
+ * @return string|false|null Returns a JSON `string` once the retrieval of data was sucessful. 
+ * If something goes wrong when trying to convert the data to string, `false` will be returned. If there is no session data because
+ * no user is logged in, `null` is returned.
+ */
+function fetchSessionData()
+{
+    if (isLoggedIn()) {
+        $session_user = unserialize($_SESSION["user"]);
+        return json_encode($session_user->toJSON());
+    } else {
+        return null;
+    }
+}
