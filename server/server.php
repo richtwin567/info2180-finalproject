@@ -155,7 +155,6 @@ switch ($path) {
         }
         break;
 
-
     default:
         http_response_code(400);
         die();

@@ -1,16 +1,10 @@
 async function fetchAllIssues() {
     let url = 'issues.php/issues'
-    const response = await fetch(url);
-    if (response.ok) {
-        // Returns the response as a string
-        console.log(response);
-        return response.text();
+        // Try catch implementation 
+    try {
+        const response = await fetch(url);
 
-        // If any unexpected errors happen while fetching, an error is thrown
-    } else {
-        const message = `An error has occured: ${response.status}`;
-        throw new Error(message);
+    } catch (error) {
+        console.log(error.message)
     }
 }
-
-export { fetchAllIssues }
