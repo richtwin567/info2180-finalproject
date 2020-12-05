@@ -52,30 +52,32 @@ class User
         return $this->date_joined;
     }
 
+    /**
+     * Converts the user attributes to an array that can be easily converted
+     * to a JSON string with json_encode.
+     * 
+     * @return array 
+     */
     public function toJSON()
     {
         return get_object_vars($this);
     }
-    
-    public function __serialize()
-    {
-        return array(
-            'id' => $this->getID(),
-            'firstname' => $this->getFirstName(),
-            'lastname' => $this->getLastName(),
-            'password' => $this->getPassword(),
-            'email' => $this->getEmail(),
-            'date_joined' => $this->getDateJoined()
-        );
-    }
 
-    public function __unserialize($data)
+    /**
+     * Factory constructor for `User`. Sanitizes the data before creating the user.
+     * @param array $data An associative PHP array.
+     * @return User
+     */
+    public static function buildAndSanitize($data)
     {
-        $this->id = $data["id"];
-        $this->firstname = $data["firstname"];
-        $this->lastname = $data["lastname"];
-        $this->password = $data["password"];
-        $this->email = $data["email"];
-        $this->date_joined = $data["date_joined"];
+        $user = new User(
+            intval(filter_var($data["id"], FILTER_SANITIZE_NUMBER_INT)),
+            filter_var($data["firstname"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["lastname"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["password"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["email"], FILTER_SANITIZE_EMAIL),
+            filter_var($data["date_joined"], FILTER_SANITIZE_FULL_SPECIAL_CHARS)
+        );
+        return $user;
     }
 }

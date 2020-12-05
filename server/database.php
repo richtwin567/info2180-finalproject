@@ -1,14 +1,16 @@
 <?php
 include_once("user.php");
-include_once("issue.php");/* 
+include_once("issue.php");
+include_once("get_queries.php");
 include_once("insert_queries.php");
-include_once("delete_queries.php");
 include_once("update_queries.php");
-include_once("get_queries.php"); */
 
-// TODO - Potentially rename this file
 class Database
 {
+    use InsertQueries;
+    use UpdateQueries;
+    use GetQueries;
+    
     private $conn;
     private $host = 'localhost';
     private $dbname = 'issuetracker';
@@ -38,7 +40,14 @@ class Database
         $schemasql = file_get_contents("../sql/schema.sql", FILE_USE_INCLUDE_PATH);
         //var_dump($schemasql);
         $this->conn->query($schemasql);
-        $initialuser = new User(null, 'John', 'Doe', 'password123', 'admin@project2.com', null);
+        $initialuser = array(
+            "id" => null,
+            "firstname" => 'John',
+            "lastname" => 'Doe',
+            "password" => 'password123',
+            "email" => 'admin@project2.com',
+            "date_joined" => null
+        );
         $this->addUser($initialuser, $this->conn);
     }
 
@@ -52,64 +61,31 @@ class Database
         $this->connect();
     }
 
-    // get methods
-    public function getUser($id)
+  
+    // PATCH requests
+
+    
+    // helper methods
+    private function verifyUser($user, $password)
     {
-        $sql = "SELECT * FROM `users` WHERE id=$id;";
-        $stmt = $this->conn->query($sql);
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if ($results != FALSE && !empty($results)) {
-            $user = new User($results["id"], $results["firstname"], $results["lastname"], $results["password"], $results["email"], $results["date_joined"]);
-            return $user;
-        } else {
-            return null;
-        }
+        //echo var_dump($user);
+        return password_verify($password, $user->getPassword());
     }
 
-
-    public function getIssues($json = array())
+    private function buildQueryTail($sql, $keys, $conjunction)
     {
-        $sql = "SELECT * FROM `issues`";
-        if (!empty($json)) {
-            $sql = $sql . " WHERE";
-            foreach ($json as $key => $value) {
-                $sql = $sql . " $key=$value AND";
+        $sql = $sql . " WHERE";
+        foreach ($keys as $key => $values) {
+            if (is_array($values)) {
+                foreach ($values as $value) {
+                    //echo var_dump($id);
+                    $sql = $sql . " $key='$value' $conjunction";
+                }
+            } else {
+                $sql = $sql . " $key='$values' $conjunction";
             }
-            $sql = substr($sql, 0, -4);
         }
-        //$sql = $sql . ";";
-        //echo $sql;
-        $stmt = $this->conn->query($sql);
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        //echo var_dump($results);
-        if ($results != FALSE && !empty($results)) {
-            $issueList = array();
-            foreach ($results as $row) {
-                $issue = new Issue($row["id"], $row["title"], $row["description"], $row["type"], $row["priority"], $row["status"], $row["assigned_to"], $row["created_by"], $row["created"], $row["updated"]);
-                array_push($issueList, $issue->toJSON());
-            }
-            return $issueList;
-        } else {
-            return null;
-        }
-    }
-
-    public function addUser($user)
-    {
-        $hashed_pass = password_hash($user->getPassword(), PASSWORD_DEFAULT);
-        $userquery = "INSERT INTO `users` (`id`, `firstname`, `lastname`, `password`, `email`, `date_joined`) VALUES (NULL, '{$user->getFirstName()}', '{$user->getLastName()}', '$hashed_pass', '{$user->getEmail()}', '{$user->getDateJoined()}');";
-        $this->conn->query($userquery);
-    }
-
-    public function addIssue($issue)
-    {
-        $issuequery = "INSERT INTO `issues` (`id`, `title`, `description`, `type`, `priority`, `status`, `assigned_to`, `created_by`, `created`, `updated`) VALUES (NULL, '{$issue->getTitle()}', '{$issue->getDescription()}', '{$issue->getType()}', '{$issue->getPriority()}', '{$issue->getStatus()}', '{$issue->getAssignedTo()}', '{$issue->getCreatedBy()}', '{$issue->getCreated()}','{$issue->getUpdated()}');";
-        $this->conn->query($issuequery);
-    }
-
-
-    // to be moved from this file
-    function verifyUser()
-    {
+        $sql = substr($sql, 0, -1-strlen($conjunction));
+        return $sql;
     }
 }
