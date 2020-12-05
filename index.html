@@ -9,6 +9,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./styles/style.css">
+    <script src="scripts/auth.js" defer></script>
 </head>
 
 <body>
@@ -51,10 +52,10 @@
                 <input type='submit' value='Submit' class='btn'>
             </form>
             <!-- Form for Login -->
-            <form action="" method="post" class='content' data-number='1'>
+            <form id="login-user" action="" method="post" class='content' data-number='1'>
                 <h1>Login</h1>
-                <input type="email" name="email" placeholder=" User Name" class="input-field" required>
-                <input type="password" name="password" placeholder=" Password" class="input-field" required>
+                <input id="login-email" type="email" name="email" placeholder=" User Name" class="input-field" required>
+                <input id="login-password" type="password" name="password" placeholder=" Password" class="input-field" required>
                 <input type='submit' value='Login' class='btn' id='login-btn'>
             </form>
             <!-- Form for the issues creation -->

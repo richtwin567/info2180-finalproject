@@ -1,5 +1,5 @@
 <?php
-
+include_once("session.php");
 trait GetQueries
 {
     // GET methods

@@ -6,6 +6,7 @@ include_once("issue.php");
 include_once("get_queries.php");
 include_once("insert_queries.php");
 include_once("update_queries.php");
+include_once("session.php");
 
 class Database
 {
