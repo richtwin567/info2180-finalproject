@@ -40,7 +40,7 @@ switch ($path) {
                     echo "1";
                 } else {
                     http_response_code(400);
-                    echo "2";
+                    echo "0";
                 }
                 break;
 
@@ -53,7 +53,7 @@ switch ($path) {
                     echo "1";
                 } else {
                     http_response_code(422);
-                    echo "2";
+                    echo "0";
                 }
                 break;
 
@@ -91,7 +91,7 @@ switch ($path) {
                     echo "1";
                 } else {
                     http_response_code(400);
-                    echo "2";
+                    echo "0";
                 }
                 die();
                 break;

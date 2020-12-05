@@ -52,11 +52,22 @@ class User
         return $this->date_joined;
     }
 
+    /**
+     * Converts the user attributes to an array that can be easily converted
+     * to a JSON string with json_encode.
+     * 
+     * @return array 
+     */
     public function toJSON()
     {
         return get_object_vars($this);
     }
-    
+
+    /**
+     * Factory constructor for `User`. Sanitizes the data before creating the user.
+     * @param array $data An associative PHP array.
+     * @return User
+     */
     public static function buildAndSanitize($data)
     {
         $user = new User(

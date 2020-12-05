@@ -100,11 +100,24 @@ class Issue
         $this->updated = date("Y-m-d H:i:s");
     }
 
+
+    /**
+     * Converts the issue attributes to an array that can be easily converted
+     * to a JSON string with json_encode.
+     * 
+     * @return array 
+     */
     public function toJSON()
     {
         return get_object_vars($this);
     }
 
+
+    /**
+     * Factory constructor for `Issue`. Sanitizes the data before creating the issue.
+     * @param array $data An associative PHP array.
+     * @return Issue
+     */
     public static function buildAndSanitize($data)
     {
         $issue = new Issue(
