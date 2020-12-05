@@ -60,7 +60,7 @@ aside {
   margin: 0 15px;
 }
 
-.sidebar-option {
+.sidebar-option,#logout {
   cursor: pointer;
 }
 

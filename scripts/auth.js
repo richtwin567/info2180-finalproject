@@ -24,6 +24,15 @@ loginForm.addEventListener("submit", (e) => {
 		});
 });
 
+const logoutBtn = document.getElementById("logout");
+logoutBtn.addEventListener("click", (e) => {
+	fetch("./server/server.php/session", {
+		method: "DELETE",
+	}).then((_) => {
+		loadContent();
+	});
+});
+
 function authenticateUser() {
 	let submitBtn = document.getElementById("");
 }
