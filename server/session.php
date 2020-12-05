@@ -1,38 +1,28 @@
 <?php
+function loginUser($conn, $email) {
+    $query = "SELECT * FROM users WHERE email = '$email'";
+    $_SESSION['userInfo'] = mysqli_query($conn,$query);
 
-require_once('database.php');
+    $_SESSION['id'] = $_SESSION['userInfo'][0];
+    $_SESSION['firstname'] = $_SESSION['userInfo'][1];
+    $_SESSION['lastname'] = $_SESSION['userInfo'][2];
+    $_SESSION['password'] = $_SESSION['userInfo'][3];
+    $_SESSION['email'] = $_SESSION['userInfo'][4];
+    $_SESSION['date_joined'] = $_SESSION['userInfo'][5];
 
-function loginUser($conn) {
-    session_start();
-    if(isset($_POST['Login'])) {
-       if(empty($_POST['email']) || empty($_POST['password'])) {
-            echo 'Please enter your email/password';
-       } else {
-            $query = "select * from user where email='" . $_POST['email'] . "' and password='". $_POST['password'] . "'";
-            $result = mysqli_query($conn, $query);
-
-            if(mysqli_fetch_assoc($result)) {
-                $_SESSION['email']=$_POST['email'];
-                isLoggedIn(true);
-                //Link to dashboard
-            } else {
-                echo "Invalid email/password";
-            }
-       }
-    } else {
-        echo 'Error in connecting';
-    }
+    $_SESSION['user'] = $_SESSION['firstname'] . ' ' . $_SESSION['lastname'];
 }
 
 function logoutUser() {
-    if(isset($_GET['logout'])) {
-        session_destroy();
-        isLoggedIn(false);
-        //link to Login screen
-    }
+    session_destroy();
+    header("location:index.html?=login"); //redirect to login screen
 }
 
-function isLoggedIn($loggedIn) {
-    return $loggedIn;
+function isLoggedIn() {
+    if(isset($_SESSION['user'])) {
+        return true;
+    }else{
+        return false;
+    }
 }
 ?>
