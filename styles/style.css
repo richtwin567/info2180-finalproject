@@ -14,7 +14,9 @@ body{
     grid-template-columns: 20vw 8fr;
     grid-template-rows: 11vh 9fr;
     column-gap: 2em;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+
 }
 
 /* Global styles */
@@ -28,6 +30,7 @@ body{
 
 #grid-wrapper {
     grid-area: content;
+    overflow-y: auto;
 }
 
 main {
