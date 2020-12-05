@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include_once("user.php");
 include_once("issue.php");
 include_once("get_queries.php");
@@ -27,7 +29,6 @@ class Database
 
     private function connect()
     {
-
         try {
             $this->conn = new PDO("mysql:host=$this->host;dbname=$this->dbname;charset=utf8mb4", $this->username, $this->password);
         } catch (PDOException $except) {
@@ -61,10 +62,6 @@ class Database
         $this->connect();
     }
 
-  
-    // PATCH requests
-
-    
     // helper methods
     private function verifyUser($user, $password)
     {
