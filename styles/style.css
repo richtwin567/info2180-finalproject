@@ -11,6 +11,10 @@
 body{
     display: grid;
     grid-template-areas: "header header" "nav content";
+    grid-template-columns: 20vw 8fr;
+    grid-template-rows: 11vh 9fr;
+    column-gap: 2em;
+    min-height: 100vh;
 }
 
 /* Global styles */
@@ -23,8 +27,7 @@ body{
 /* Styling the grid wrapper */
 
 #grid-wrapper {
-    display: grid;
-    grid-template-columns: 20vw auto;
+    grid-area: content;
 }
 
 main {
@@ -36,7 +39,7 @@ main {
 /* Styling the sidebar */
 
 aside {
-    width: 20vw;
+    grid-area: nav;
     height: 100%;
     background-color: #e8e8e8;
 }
@@ -64,8 +67,10 @@ aside {
 /* Styling the main nav bar */
 
 header {
+    grid-area: header;
     background-color: black;
     color: white;
+    height: 11vh;
 }
 
 header img {
