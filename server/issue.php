@@ -94,4 +94,44 @@ class Issue
     {
         return $this->updated;
     }
+
+    public function setUpdated()
+    {
+        $this->updated = date("Y-m-d H:i:s");
+    }
+
+
+    /**
+     * Converts the issue attributes to an array that can be easily converted
+     * to a JSON string with json_encode.
+     * 
+     * @return array 
+     */
+    public function toJSON()
+    {
+        return get_object_vars($this);
+    }
+
+
+    /**
+     * Factory constructor for `Issue`. Sanitizes the data before creating the issue.
+     * @param array $data An associative PHP array.
+     * @return Issue
+     */
+    public static function buildAndSanitize($data)
+    {
+        $issue = new Issue(
+            intval(filter_var(htmlspecialchars($data["id"]), FILTER_SANITIZE_NUMBER_INT)),
+            filter_var($data["title"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["description"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["type"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["priority"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["status"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["assigned_to"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["created_by"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["created"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            filter_var($data["updated"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+        );
+        return $issue;
+    }
 }
