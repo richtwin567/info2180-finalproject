@@ -37,10 +37,38 @@ function authenticateUser() {
 	let submitBtn = document.getElementById("");
 }
 
+const registerForm = document.getElementById("register-user");
+registerForm.addEventListener("submit", registerUser);
+
 function registerUser(e) {
 	e.preventDefault();
 	let formElements = document.getElementById("register-user").elements;
 	console.log(formElements);
+	var json = {};
+	for (var el of formElements) {
+		json[el.name] = el.value;
+	}
+	console.log(json);
+	fetch("./server/server.php/users", {
+		method: "POST",
+		body: JSON.stringify(json),
+	}).then((res) => {
+		if (res.status == 200) {
+			for (var el of formElements) {
+				if (el.getAttribute("type") != "submit") {
+					el.value = "";
+				}
+			}
+			var home = document.getElementById("home");
+			simulateClick(home);
+		}
+	});
+}
+
+function simulateClick(element) {
+	var click = new MouseEvent("click");
+
+	element.dispatchEvent(click);
 }
 
 export { registerUser };

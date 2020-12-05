@@ -25,7 +25,7 @@
         <!-- Sidebar -->
         <div id="sidebar-contents">
             <ul>
-                <li class="sidebar-option active" data-number="1">
+                <li id="home" class="sidebar-option active" data-number="1">
                     <img src="assets/home-24px.svg" alt="home" />Home
                 </li>
                 <li class="sidebar-option" data-number="2">
@@ -47,17 +47,17 @@
             <form id="register-user" class="content" data-number="2">
                 <h1>New User</h1>
                 <label for="firstname">First Name</label>
-                <input type="text" id="firstname" class="input-field" pattern="^[a-zA-Z]+$"
+                <input type="text" id="firstname" name="firstname" class="input-field" pattern="^[a-zA-Z]+$"
                     title="Uppercase and/or lower case letters" required />
                 <label for="lastname">Last Name</label>
-                <input type="text" id="lastname" class="input-field" pattern="^[a-zA-Z]+$"
+                <input type="text" id="lastname" name="lastname" class="input-field" pattern="^[a-zA-Z]+$"
                     title="Uppercase and/or lower case letters" required />
                 <label for="password">Password</label>
-                <input type="password" class="input-field" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                <input type="password" class="input-field" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                     title="Must contain at least one number,
                 one uppercase and lowercase letter, and at least 8 or more characters" required />
                 <label for="email">Email</label>
-                <input type="email" class="input-field" id="email" required />
+                <input type="email" class="input-field" name="email" id="email" required />
                 <input type="submit" value="Submit" class="btn" />
             </form>
             <!-- Form for Login -->

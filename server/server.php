@@ -123,6 +123,7 @@ switch ($path) {
     case "/session":
         switch ($request) {
             case 'GET':
+                setHeaders();
                 $result = fetchSessionData();
                 if ($result === null) {
                     http_response_code(404);
@@ -136,6 +137,7 @@ switch ($path) {
                 break;
 
             case 'DELETE':
+                setHeaders();
                 $result = logoutUser();
                 if ($result === null) {
                     http_response_code(404);

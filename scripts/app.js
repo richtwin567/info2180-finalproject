@@ -5,6 +5,4 @@ import { registerUser } from './auth.js';
 window.addEventListener('load', function(e) {
     loadContent();
     addContentListeners();
-    let registrationBtn = document.querySelector('#register-user .btn');
-    registrationBtn.addEventListener('click', registerUser(e));
 });

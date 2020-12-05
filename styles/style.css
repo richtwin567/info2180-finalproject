@@ -53,7 +53,11 @@ aside {
 #sidebar-contents li {
   display: flex;
   align-items: center;
-  margin: 30px 0;
+  padding: 15px 0;
+}
+
+#sidebar-contents .active{
+  background-color: lightgray;
 }
 
 #sidebar-contents img {
