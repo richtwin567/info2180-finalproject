@@ -15,25 +15,26 @@ trait GetQueries
                 $sql = $this->buildQueryTail($sql, $keys, "OR");
             }
             $sql = $sql . ";";
-            //echo $sql;
             $stmt = $this->conn->query($sql);
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            //echo var_dump($results);
             if ($results != FALSE && !empty($results)) {
                 $userList = array();
+
                 foreach ($results as $row) {
                     $user = User::buildAndSanitize($row);
                     if ($pass != null) {
                         if ($this->verifyUser($user, $pass)) {
                             array_push($userList, $user->toJSON());
+                            // store the user in the session
+                            loginUser($user);
                         } else {
                             return FALSE;
                         }
                     } else {
-                        //echo "no pass";
                         array_push($userList, $user->toJSON());
                     }
                 }
+                
                 return json_encode($userList);
             } else {
                 return null;
@@ -52,10 +53,8 @@ trait GetQueries
                 $sql = $this->buildQueryTail($sql, $json, "AND");
             }
             $sql = $sql . ";";
-            //echo $sql;
             $stmt = $this->conn->query($sql);
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            //echo var_dump($results);
             if ($results != FALSE && !empty($results)) {
                 $issueList = array();
                 foreach ($results as $row) {
