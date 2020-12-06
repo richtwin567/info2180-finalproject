@@ -23,7 +23,7 @@ class Issue
         $this->type = $type;
         $this->priority = $priority;
         if ($status == null) {
-            $this->status = "Open";
+            $this->status = "OPEN";
         } else {
             $this->status = $status;
         }
@@ -33,13 +33,14 @@ class Issue
         } else {
             $this->created_by = $created_by;
         }
+        $now = date("Y-m-d H:i:s");
         if ($created == null) {
-            $this->created = date("Y-m-d H:i:s");
+            $this->created = $now;
         } else {
             $this->created = $created;
         }
-        if ($updated) {
-            $this->updated = date("Y-m-d H:i:s");
+        if ($updated == null) {
+            $this->updated = $now;
         } else {
             $this->updated = $updated;
         }

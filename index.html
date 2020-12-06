@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./styles/style.css">
     <script src="scripts/auth.js" defer type="module"></script>
+    <script src="scripts/issues.js" defer type="module"></script>
 </head>
 
 <body>
@@ -72,15 +73,24 @@
             <form id="issue-creation" class="content" data-number="3">
                 <h1>Create Issue</h1>
                 <label for="title">Title</label>
-                <input type="text" class="input-field" id="title" required />
+                <input type="text" name="title" class="input-field" id="title" required />
                 <label for="description">Description</label>
-                <textarea id="description" class="input-field" required></textarea>
+                <textarea id="description" name="description" class="input-field" required></textarea>
                 <label for="assigned_to">Assigned To</label>
-                <select id="assigned_to" required></select>
+                <select id="assigned_to" name="assigned_to" required>
+                </select>
                 <label for="type">Type</label>
-                <select id="type" required></select>
+                <select id="type" name="type" required>
+                    <option value="Bug">Bug</option>
+                    <option value="Proposal">Proposal</option>
+                    <option value="Task">Task</option>
+                </select>
                 <label for="priority">Priority</label>
-                <select id="priority" required></select>
+                <select id="priority" name="priority" required>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
                 <input type="submit" value="Submit" class="btn" />
             </form>
             <!-- Section for the issues page -->
@@ -97,15 +107,19 @@
                     <li class="filter-option">My Tickets</li>
                 </ul>
                 <table>
-                    <tr id="table-header">
+                    <thead id="table-header">
+                    <tr>
                         <th>Title</th>
                         <th>Type</th>
                         <th id="issue-status">Status</th>
                         <th>Assigned To</th>
                         <th>Created</th>
                     </tr>
+                    </thead>
+
                     <!-- Dynamically insert rows here -->
-                    <tr>
+                    <tbody id="issues-table-body">
+                    <!-- <tr>
                         <td>
                             #100 <a href="" class="issue">Implement issue creation</a>
                         </td>
@@ -137,7 +151,8 @@
                         </td>
                         <td>Maria Anders</td>
                         <td>2019-11-01</td>
-                    </tr>
+                    </tr> -->
+                    </tbody>
                 </table>
             </div>
             <!-- Jobs Details View -->

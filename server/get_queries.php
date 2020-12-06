@@ -48,7 +48,34 @@ trait GetQueries
     public function getIssues($json = array())
     {
         try {
-            $sql = "SELECT * FROM `issues`";
+            $sql = <<<EOT
+SELECT 
+    res.`id`,
+    res.`title`,
+    res.`description`,
+    res.`type`,
+	res.`priority`,
+	res.`status`,
+	res.assigned_to, 
+    CONCAT(`users`.`firstname`," ",`users`.`lastname`) as created_by, 
+	res.`created`, 
+	res.`updated` 
+FROM (
+        SELECT 
+		`issues`.`id`,
+        `issues`.`title`,
+        `issues`.`description`,
+        `issues`.`type`,
+        `issues`.`priority`,
+        `issues`.`status`,
+        CONCAT(`users`.`firstname`," ",`users`.`lastname`) as assigned_to, 
+        `issues`.`created_by`, 
+        `issues`.`created`, 
+        `issues`.`updated` 
+	FROM 
+		`issues` LEFT JOIN `users` ON `users`.`id`=`issues`.`assigned_to`) as res 
+LEFT JOIN `users` ON `users`.`id`=res.created_by
+EOT;
             if (!empty($json)) {
                 $sql = $this->buildQueryTail($sql, $json, "AND");
             }

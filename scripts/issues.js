@@ -1,10 +1,30 @@
-async function fetchAllIssues() {
-    let url = 'issues.php/issues'
-        // Try catch implementation 
-    try {
-        const response = await fetch(url);
+import { simulateClick } from "./util.js";
 
-    } catch (error) {
-        console.log(error.message)
-    }
+const issue = document.getElementById("issue-creation");
+issue.addEventListener("submit", registerIssue);
+
+function registerIssue(e) {
+	e.preventDefault();
+	let formElements = document.getElementById("issue-creation").elements;
+	console.log(formElements);
+	var json = {};
+	for (var el of formElements) {
+		json[el.name] = el.value;
+	}
+
+	console.log(json);
+	fetch("./server/server.php/issues", {
+		method: "POST",
+		body: JSON.stringify(json),
+	}).then((res) => {
+		if (res.status == 200) {
+			for (var el of formElements) {
+				if (el.getAttribute("type") != "submit") {
+					el.value = "";
+				}
+			}
+			var home = document.getElementById("home");
+			simulateClick(home);
+		}
+	});
 }

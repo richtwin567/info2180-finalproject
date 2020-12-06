@@ -199,9 +199,9 @@ td {
   text-align: center;
 }
 
-.open,
-.closed,
-.in-progress {
+.OPEN,
+.CLOSED,
+.IN-PROGRESS {
   margin: 0 auto;
   color: #ffff;
   padding: 5px 0;
@@ -212,17 +212,17 @@ td {
   text-transform: uppercase;
 }
 
-.open {
+.OPEN {
   background-color: #139e4d;
   width: 30%;
 }
 
-.closed {
+.CLOSED {
   background-color: #dc6f26;
   width: 45%;
 }
 
-.in-progress {
+.IN-PROGRESS {
   background-color: #ffdb0c;
   color: black;
   width: 70%;

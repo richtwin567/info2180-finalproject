@@ -42,6 +42,7 @@ switch ($path) {
                     http_response_code(400);
                     echo "0";
                 }
+                die();
                 break;
 
 
@@ -55,6 +56,7 @@ switch ($path) {
                     http_response_code(422);
                     echo "0";
                 }
+                die();
                 break;
 
 
@@ -72,6 +74,7 @@ switch ($path) {
 
             default:
                 http_response_code(400);
+                die();
                 break;
         }
         break;
