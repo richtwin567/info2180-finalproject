@@ -12,30 +12,34 @@ trait GetQueries
                     $pass = $keys["password"];
                     unset($keys["password"]);
                 }
-                $sql = $this->buildQueryTail($sql, $keys, "OR");
+                $sql = $this->buildQueryTail($sql, $keys, "OR", "users");
             }
             $sql = $sql . ";";
             $stmt = $this->conn->query($sql);
-            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if ($results != FALSE && !empty($results)) {
-                $userList = array();
+            if ($stmt != false) {
+                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                if ($results != FALSE && !empty($results)) {
+                    $userList = array();
 
-                foreach ($results as $row) {
-                    $user = User::buildAndSanitize($row);
-                    if ($pass != null) {
-                        if ($this->verifyUser($user, $pass)) {
-                            array_push($userList, $user->toJSON());
-                            // store the user in the session
-                            loginUser($user);
+                    foreach ($results as $row) {
+                        $user = User::buildAndSanitize($row);
+                        if ($pass != null) {
+                            if ($this->verifyUser($user, $pass)) {
+                                array_push($userList, $user->toJSON());
+                                // store the user in the session
+                                loginUser($user);
+                            } else {
+                                return FALSE;
+                            }
                         } else {
-                            return FALSE;
+                            array_push($userList, $user->toJSON());
                         }
-                    } else {
-                        array_push($userList, $user->toJSON());
                     }
+
+                    return json_encode($userList);
+                } else {
+                    return null;
                 }
-                
-                return json_encode($userList);
             } else {
                 return null;
             }
@@ -77,18 +81,23 @@ FROM (
 LEFT JOIN `users` ON `users`.`id`=res.created_by
 EOT;
             if (!empty($json)) {
-                $sql = $this->buildQueryTail($sql, $json, "AND");
+                $sql = $this->buildQueryTail($sql, $json, "AND", "res");
             }
             $sql = $sql . ";";
+            //echo $sql;
             $stmt = $this->conn->query($sql);
-            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if ($results != FALSE && !empty($results)) {
-                $issueList = array();
-                foreach ($results as $row) {
-                    $issue = Issue::buildAndSanitize($row);
-                    array_push($issueList, $issue->toJSON());
+            if ($stmt != false) {
+                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                if ($results != FALSE && !empty($results)) {
+                    $issueList = array();
+                    foreach ($results as $row) {
+                        $issue = Issue::buildAndSanitize($row);
+                        array_push($issueList, $issue->toJSON());
+                    }
+                    return json_encode($issueList);
+                } else {
+                    return null;
                 }
-                return json_encode($issueList);
             } else {
                 return null;
             }

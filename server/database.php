@@ -70,17 +70,17 @@ class Database
         return password_verify($password, $user->getPassword());
     }
 
-    private function buildQueryTail($sql, $keys, $conjunction)
+    private function buildQueryTail($sql, $keys, $conjunction, $table)
     {
         $sql = $sql . " WHERE";
         foreach ($keys as $key => $values) {
             if (is_array($values)) {
                 foreach ($values as $value) {
                     //echo var_dump($id);
-                    $sql = $sql . " $key='$value' $conjunction";
+                    $sql = $sql . " $table.$key='$value' $conjunction";
                 }
             } else {
-                $sql = $sql . " $key='$values' $conjunction";
+                $sql = $sql . " $table.$key='$values' $conjunction";
             }
         }
         $sql = substr($sql, 0, -1-strlen($conjunction));
