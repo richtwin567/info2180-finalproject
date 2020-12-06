@@ -5,7 +5,19 @@ import { updateIssue } from "./issues.js";
  * Handles the toggling between the various segments of the issue tracker
  */
 function addContentListeners() {
+	var filters = document.getElementsByClassName("filter-option");
+	
+	for (var filter of filters) {
+		filter.addEventListener("click",e=>{
+			var activeFilter = document.getElementById("active-filter");
+			activeFilter.id = "";
+			e.target.id = "active-filter";
+			loadDynamicContent();
+		})
+	}
+
 	let sidebarOptions = document.querySelectorAll(".sidebar-option");
+	
 	for (let option of sidebarOptions) {
 		option.addEventListener("click", function (event) {
 			const eventTarget = event.target;
@@ -46,11 +58,7 @@ function addContentListeners() {
 					}
 				}
 			});
-
-			console.log("works1");
-			console.log("works2");
-			fetchAllUsersForForm();
-			fetchAllIssuesForTable();
+			loadDynamicContent();
 		});
 	}
 }
@@ -83,8 +91,27 @@ function loadContent() {
 			}
 		}
 	});
-	fetchAllIssuesForTable();
+	loadDynamicContent();
+}
+
+
+function loadDynamicContent() {
 	fetchAllUsersForForm();
+	var filters = document.getElementsByClassName("filter-option");
+	var query;
+	for (var filter of filters) {
+		if (filter.id == "active-filter") {
+			query = filter.getAttribute("data-query");
+			if (filter.innerHTML == "MY TICKETS") {
+				fetch("./server/server.php/session")
+					.then((res) => res.json())
+					.then((data) => (query += data["id"]))
+					.then((_) => fetchAllIssuesForTable(query));
+			} else {
+				fetchAllIssuesForTable(query);
+			}
+		}
+	}
 }
 
 function buildUserOption(user) {
@@ -124,8 +151,11 @@ function fetchAllUsersForForm() {
 	});
 }
 
-function fetchAllIssuesForTable() {
+function fetchAllIssuesForTable(filter = null) {
 	var url = "./server/server.php/issues";
+	if (filter != null) {
+		url += filter;
+	}
 	fetch(url).then((res) => {
 		if (res.status == 200) {
 			res.json()
@@ -165,8 +195,8 @@ function showDetails(data) {
 	const type = document.getElementById("issue-type");
 	const priority = document.getElementById("issue-priority");
 	const status = document.getElementById("job-status");
-    
-    //put the correct content on the page for the issue
+
+	//put the correct content on the page for the issue
 	id.innerHTML = "Issue #" + data["id"];
 	title.innerHTML = data["title"];
 	desc.innerHTML = data["description"];
@@ -188,7 +218,7 @@ function showDetails(data) {
 	priority.innerHTML = data["priority"];
 	status.innerHTML = data["status"];
 
-    //show the details and hide the other content
+	//show the details and hide the other content
 	for (let content of allContent) {
 		// Set the appropriate section to be displayed
 		if (parseInt(content.getAttribute("data-number")) === 4) {
@@ -201,11 +231,11 @@ function showDetails(data) {
 
 const markClosedBtn = document.getElementById("close-issue");
 markClosedBtn.addEventListener("click", (e) => {
-    const id = parseInt(
+	const id = parseInt(
 		document.getElementById("issue-id").innerHTML.split("#")[1]
 	);
 	var url = `./server/server.php/issues?id=${id}`;
-	updateIssue(url,"CLOSED").then((res) => {
+	updateIssue(url, "CLOSED").then((res) => {
 		if (res.status == 200) {
 			fetch(url)
 				.then((res) => res.json())
@@ -216,11 +246,11 @@ markClosedBtn.addEventListener("click", (e) => {
 
 const markInProgressBtn = document.getElementById("in-progress-issue");
 markInProgressBtn.addEventListener("click", (e) => {
-    const id = parseInt(
+	const id = parseInt(
 		document.getElementById("issue-id").innerHTML.split("#")[1]
 	);
 	var url = `./server/server.php/issues?id=${id}`;
-	updateIssue(url,"IN PROGRESS").then((res) => {
+	updateIssue(url, "IN PROGRESS").then((res) => {
 		if (res.status == 200) {
 			fetch(url)
 				.then((res) => res.json())

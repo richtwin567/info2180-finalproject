@@ -103,9 +103,9 @@
                 </div>
                 <ul>
                     <li>Filter By:</li>
-                    <li class="filter-option">All</li>
-                    <li class="filter-option">Open</li>
-                    <li class="filter-option">My Tickets</li>
+                    <li id="active-filter" class="filter-option" data-query="">ALL</li>
+                    <li class="filter-option" data-query="?status=OPEN">OPEN</li>
+                    <li class="filter-option" data-query="?assigned_to_id=">MY TICKETS</li>
                 </ul>
                 <table>
                     <thead id="table-header">
@@ -126,7 +126,7 @@
             </div>
             <!-- Jobs Details View -->
             <div id="job-view" class="content" data-number="4">
-                <h1 id="job-title">XSS Vulnerability in Add User Form</h1>
+                <h1 id="job-title"></h1>
                 <p id="issue-id"></p>
                 <div id="issue-info-con">
                     <div id="issue-desc-con">

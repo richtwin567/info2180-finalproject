@@ -11,12 +11,24 @@ class Issue
     private $priority;
     private $status;
     private $assigned_to;
+    private $assigned_to_id;
     private $created_by;
     private $created;
     private $updated;
 
-    public function __construct($id = null, $title, $description, $type, $priority, $status = null, $assigned_to, $created_by = null, $created = null, $updated = null)
-    {
+    public function __construct(
+        $id = null,
+        $title,
+        $description,
+        $type,
+        $priority,
+        $status = null,
+        $assigned_to,
+        $created_by = null,
+        $created = null,
+        $updated = null,
+        $assigned_to_id = null
+    ) {
         $this->id = $id;
         $this->title = $title;
         $this->description = $description;
@@ -44,6 +56,7 @@ class Issue
         } else {
             $this->updated = $updated;
         }
+        $this->assigned_to_id = $assigned_to_id;
     }
 
     public function getID()
@@ -102,6 +115,11 @@ class Issue
     }
 
 
+    public function getAssignedToID()
+    {
+        return $this->assigned_to_id;
+    }
+
     /**
      * Converts the issue attributes to an array that can be easily converted
      * to a JSON string with json_encode.
@@ -131,7 +149,8 @@ class Issue
             filter_var($data["assigned_to"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             filter_var($data["created_by"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             filter_var($data["created"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            filter_var($data["updated"], FILTER_SANITIZE_FULL_SPECIAL_CHARS)
+            filter_var($data["updated"], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            intval(filter_var(htmlspecialchars($data["assigned_to_id"]), FILTER_SANITIZE_NUMBER_INT))
         );
         return $issue;
     }

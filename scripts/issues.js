@@ -36,4 +36,5 @@ async function updateIssue(url, newStatus) {
 	});
 }
 
+
 export {updateIssue};
