@@ -1,14 +1,40 @@
-export async function fetchissues(){
-    let url = 'issues.php/issues'
-    const response = await fetch(url);
-    if(response.ok){
-        // Returns the response as a string
-        console.log (response);
-        return response.text();
-    
-    // If any unexpected errors happen while fetching, an error is thrown
-    }else{
-        const message = `An error has occured: ${response.status}`;
-        throw new Error(message);
-    }
-}  
+import { simulateClick } from "./util.js";
+
+const issue = document.getElementById("issue-creation");
+issue.addEventListener("submit", registerIssue);
+
+function registerIssue(e) {
+	e.preventDefault();
+	let formElements = document.getElementById("issue-creation").elements;
+	console.log(formElements);
+	var json = {};
+	for (var el of formElements) {
+		json[el.name] = el.value;
+	}
+
+	console.log(json);
+	fetch("./server/server.php/issues", {
+		method: "POST",
+		body: JSON.stringify(json),
+	}).then((res) => {
+		if (res.status == 200) {
+			for (var el of formElements) {
+				if (el.getAttribute("type") != "submit") {
+					el.value = "";
+				}
+			}
+			var home = document.getElementById("home");
+			simulateClick(home);
+		}
+	});
+}
+
+async function updateIssue(url, newStatus) {
+	return await fetch(url, {
+		method: "PATCH",
+		body: JSON.stringify({ status: newStatus }),
+	});
+}
+
+
+export {updateIssue};
