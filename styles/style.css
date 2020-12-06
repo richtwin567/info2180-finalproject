@@ -1,1 +1,291 @@
 /* Starter file for folder structure */
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+		Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+	list-style-type: none;
+	text-decoration: none;
+}
+
+body {
+	display: grid;
+	grid-template-areas: "header header" "nav content";
+	grid-template-columns: 20vw 8fr;
+	grid-template-rows: 11vh 9fr;
+	column-gap: 2em;
+	height: 100vh;
+	overflow: hidden;
+}
+
+/* Global styles */
+
+.content {
+	display: none;
+}
+
+/* Styling the grid wrapper */
+
+#grid-wrapper {
+	grid-area: content;
+	overflow-y: auto;
+}
+
+main {
+	grid-column-start: 2;
+	margin: 40px 30px;
+}
+
+/* Styling the sidebar */
+
+aside {
+	grid-area: nav;
+	height: 100%;
+	background-color: #e8e8e8;
+}
+
+#sidebar-contents {
+	display: flex;
+	flex-direction: column;
+}
+
+#sidebar-contents li {
+	display: flex;
+	align-items: center;
+	padding: 15px 0;
+}
+
+#sidebar-contents .active {
+	background-color: lightgray;
+}
+
+#sidebar-contents img {
+	margin: 0 15px;
+}
+
+.sidebar-option,
+#logout {
+	cursor: pointer;
+}
+
+/* Styling the main nav bar */
+
+header {
+	grid-area: header;
+	background-color: black;
+	color: white;
+	height: 11vh;
+}
+
+header img {
+	height: 50px;
+	margin: 10px 20px;
+}
+
+header ul {
+	display: flex;
+	align-items: center;
+}
+
+/* Styling for the form fields */
+
+input,
+textarea,
+select,
+label {
+	display: block;
+	margin: 10px 0;
+	box-sizing: border-box;
+}
+
+textarea {
+	height: 150px;
+	resize: none;
+}
+
+.input-field,
+select {
+	width: 50%;
+	padding: 12px 5px;
+	margin: 8px 0;
+	border: 1px solid #ccc;
+	background-color: #f2f0f0;
+	border-radius: 5px;
+}
+
+/* Styling the buttons */
+
+input[type="submit"] {
+	background-color: #1973e1;
+	width: 12%;
+}
+
+h1 {
+	font-size: 40px;
+	margin-bottom: 30px;
+}
+
+.btn {
+	margin: 20px 0;
+	font-weight: bold;
+	padding: 15px 10px;
+	border-radius: 8px;
+	border: none;
+	cursor: pointer;
+	color: #fff;
+}
+
+#new-issue {
+	width: 20%;
+	background-color: #139e4d;
+}
+
+/* Styling the issues */
+
+#issues-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* Styling the header for the issue tracker */
+
+#issues ul {
+	display: flex;
+	align-items: center;
+}
+
+.filter-option {
+	padding: 5px 30px;
+	text-transform: uppercase;
+}
+
+.filter-option:hover {
+	cursor: pointer;
+}
+
+/* Styling the table for the issues*/
+
+table {
+	margin-top: 50px;
+	border-collapse: collapse;
+	width: 95%;
+}
+
+th,
+td {
+	padding: 10px 0;
+}
+
+td {
+	border-bottom: 1px solid #ddd;
+}
+
+#table-header {
+	padding: 10px 0;
+	background-color: #f2f2f2;
+	text-align: left;
+	border-radius: 10%;
+}
+
+.issue {
+	color: #1288b3;
+}
+
+/* Styling the issue types */
+
+#issue-status {
+	text-align: center;
+}
+
+.OPEN,
+.CLOSED,
+.IN-PROGRESS {
+	margin: 0 auto;
+	color: #ffff;
+	padding: 5px 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 5px;
+	text-transform: uppercase;
+}
+
+.OPEN {
+	background-color: #139e4d;
+	width: 30%;
+}
+
+.CLOSED {
+	background-color: #dc6f26;
+	width: 45%;
+}
+
+.IN-PROGRESS {
+	background-color: #ffdb0c;
+	color: black;
+	width: 70%;
+}
+
+/* Jobs Detail Section */
+
+#job-title {
+	margin-bottom: 5px;
+}
+#issue-id {
+	font-weight: 700;
+	margin-bottom: 30px;
+}
+#issue-info-con {
+	display: grid;
+	grid-template-columns: 7fr 3fr;
+}
+
+#issue-desc-con {
+	padding: 0 70px 0 0;
+}
+#issue-desc-con p:nth-child(1) {
+	margin: 0 0 30px 0;
+}
+#issue-meta {
+	padding: 10px 20px 50px 10px;
+	border: 1px solid rgb(94, 94, 94);
+	background-color: #f2f2f2;
+	border-radius: 10px;
+}
+#issue-meta p {
+	margin: 0 0 10px 0;
+}
+
+#issue-meta-con .btn {
+	width: 100%;
+	margin: 10px 0;
+}
+
+#issue-meta-con .bg1 {
+	background-color: #1973e1;
+}
+
+#issue-meta-con .bg2 {
+	background-color: #139e4d;
+}
+.issue-update {
+	margin: 10px 0;
+	color: #ccc;
+}
+.issue-update::before {
+	content: ">";
+	color: black;
+	font-weight: 700;
+	margin: 0 15px 0 0;
+}
+
+#issues ul li {
+	border-radius: 3px;
+}
+
+#active-filter {
+	background-color: #1a69c8;
+	color: white;
+}
