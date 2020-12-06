@@ -34,6 +34,7 @@ class Database
             $this->conn = new PDO("mysql:host=$this->host;dbname=$this->dbname;charset=utf8mb4", $this->username, $this->password);
         } catch (PDOException $except) {
             echo "Connection error";
+            die();
         }
     }
 

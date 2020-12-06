@@ -13,7 +13,7 @@ trait UpdateQueries{
             }
         }
         $sql = substr($sql,0,-1);
-        $sql = $this->buildQueryTail($sql,$query,"AND");
+        $sql = $this->buildQueryTail($sql,$query,"AND", "issues");
         $sql = $sql.";";
         $result= $this->conn->query($sql);
         if ($result === FALSE) {

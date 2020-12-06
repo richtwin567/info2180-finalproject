@@ -54,8 +54,8 @@
                 <input type="text" id="lastname" name="lastname" class="input-field" pattern="^[a-zA-Z]+$"
                     title="Uppercase and/or lower case letters" required />
                 <label for="password">Password</label>
-                <input type="password" class="input-field" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                    title="Must contain at least one number,
+                <input type="password" class="input-field" name="password" id="password"
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number,
                 one uppercase and lowercase letter, and at least 8 or more characters" required />
                 <label for="email">Email</label>
                 <input type="email" class="input-field" name="email" id="email" required />
@@ -78,6 +78,7 @@
                 <textarea id="description" name="description" class="input-field" required></textarea>
                 <label for="assigned_to">Assigned To</label>
                 <select id="assigned_to" name="assigned_to" required>
+                    <!-- Dynamically insert names here -->
                 </select>
                 <label for="type">Type</label>
                 <select id="type" name="type" required>
@@ -108,83 +109,52 @@
                 </ul>
                 <table>
                     <thead id="table-header">
-                    <tr>
-                        <th>Title</th>
-                        <th>Type</th>
-                        <th id="issue-status">Status</th>
-                        <th>Assigned To</th>
-                        <th>Created</th>
-                    </tr>
+                        <tr>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th id="issue-status">Status</th>
+                            <th>Assigned To</th>
+                            <th>Created</th>
+                        </tr>
                     </thead>
 
                     <!-- Dynamically insert rows here -->
                     <tbody id="issues-table-body">
-                    <!-- <tr>
-                        <td>
-                            #100 <a href="" class="issue">Implement issue creation</a>
-                        </td>
-                        <td>Bug</td>
-                        <td>
-                            <p class="open">Open</p>
-                        </td>
-                        <td>Maria Anders</td>
-                        <td>2019-11-01</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            #100 <a href="" class="issue">Implement issue creation</a>
-                        </td>
-                        <td>Bug</td>
-                        <td>
-                            <p class="closed">Closed</p>
-                        </td>
-                        <td>Maria Anders</td>
-                        <td>2019-11-01</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            #100 <a href="" class="issue">Implement issue creation</a>
-                        </td>
-                        <td>Bug</td>
-                        <td>
-                            <p class="in-progress">In Progress</p>
-                        </td>
-                        <td>Maria Anders</td>
-                        <td>2019-11-01</td>
-                    </tr> -->
+
                     </tbody>
                 </table>
             </div>
             <!-- Jobs Details View -->
-            <div id="job-view" class="content">
-                <h1 class="job-title">XSS Vulnerability in Add User Form</h1>
-                <p class="issue-id">Issue #100</p>
-                <div class="issue-info-con">
-                    <div class="issue-desc-con">
+            <div id="job-view" class="content" data-number="4">
+                <h1 id="job-title">XSS Vulnerability in Add User Form</h1>
+                <p id="issue-id"></p>
+                <div id="issue-info-con">
+                    <div id="issue-desc-con">
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut expedita quis qui sunt magnam!
+                            <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut expedita quis qui sunt magnam!
                             Odio alias ut perspiciatis eum! Nulla dolorum veniam fugit dolores repudiandae. Minus
                             tenetur ipsa quidem soluta. Lorem ipsum dolor sit amet, consectetur adipisicing
                             elit. Modi laboriosam omnis laborum! Facilis, nisi porro. Blanditiis veniam iure voluptate
                             at eum odio magni reiciendis! Tempore repudiandae perspiciatis beatae velit tempora!
+                        -->
                         </p>
                         <p class="issue-update">Issue created on</p>
                         <p class="issue-update">Last update on</p>
                     </div>
-                    <div class="issue-meta-con">
-                        <div class="issue-meta">
+                    <div id="issue-meta-con">
+                        <div id="issue-meta">
                             <h4>Assigned To</h4>
-                            <p class="test">Tom Brandy</p>
+                            <p id="issue-assignee"></p>
                             <h4>Type</h4>
-                            <p>Proposal</p>
+                            <p id="issue-type"></p>
                             <h4>Priority</h4>
-                            <p>Major</p>
+                            <p id="issue-priority"></p>
                             <h4>Status</h4>
-                            <p>Open</p>
+                            <p id="job-status"></p>
                         </div>
-                        <button class="btn bg1">Mark As Closed</button>
+                        <button id="close-issue" class="btn bg1">Mark As Closed</button>
                         <br />
-                        <button class="btn bg2">Mark In Progress</button>
+                        <button id="in-progress-issue" class="btn bg2">Mark In Progress</button>
                     </div>
                 </div>
             </div>

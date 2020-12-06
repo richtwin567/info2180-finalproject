@@ -1,6 +1,6 @@
 //  This module handles the authentication of users in the application
 import { loadContent } from "./display.js";
-import {simulateClick} from "./util.js";
+import { simulateClick } from "./util.js";
 
 const loginForm = document.getElementById("login-user");
 
@@ -9,16 +9,14 @@ loginForm.addEventListener("submit", (e) => {
 	const email = document.getElementById("login-email").value;
 	const pass = document.getElementById("login-password").value;
 	var url = `./server/server.php/users?email=${email}&password=${pass}`;
-	fetch(url)
-		.then((res) => {
-			if (res.status == 200) {
-				loadContent();
-			}
-		});
+	fetch(url).then((res) => {
+		if (res.status == 200) {
+			loadContent();
+		}
+	});
 
-		//This will allow you to fetch the data of the currently logged in user from the session
-		//Not needed in this function though. Testing only.
-		
+	//This will allow you to fetch the data of the currently logged in user from the session
+	//Not needed in this function though. Testing only.
 });
 
 const logoutBtn = document.getElementById("logout");

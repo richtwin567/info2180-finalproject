@@ -204,7 +204,7 @@ td {
 .IN-PROGRESS {
   margin: 0 auto;
   color: #ffff;
-  padding: 5px 0;
+  padding: 5px 5px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -230,44 +230,44 @@ td {
 
 /* Jobs Detail Section */
 
-.job-title {
+#job-title {
   margin-bottom: 5px;
 }
-.issue-id {
+#issue-id {
   font-weight: 700;
   margin-bottom: 30px;
 }
-.issue-info-con {
+#issue-info-con {
   display: grid;
   grid-template-columns: 7fr 3fr;
 }
 
-.issue-desc-con {
+#issue-desc-con {
   padding: 0 70px 0 0;
 }
-.issue-desc-con p:nth-child(1) {
+#issue-desc-con p:nth-child(1) {
   margin: 0 0 30px 0;
 }
-.issue-meta {
+#issue-meta {
   padding: 10px 20px 50px 10px;
   border: 1px solid rgb(94, 94, 94);
   background-color: #f2f2f2;
   border-radius: 10px;
 }
-.issue-meta p {
+#issue-meta p {
   margin: 0 0 10px 0;
 }
 
-.issue-meta-con .btn {
+#issue-meta-con .btn {
   width: 100%;
   margin: 10px 0;
 }
 
-.issue-meta-con .bg1 {
+#issue-meta-con .bg1 {
   background-color: #1973e1;
 }
 
-.issue-meta-con .bg2 {
+#issue-meta-con .bg2 {
   background-color: #139e4d;
 }
 .issue-update {

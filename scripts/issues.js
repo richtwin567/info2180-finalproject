@@ -28,3 +28,12 @@ function registerIssue(e) {
 		}
 	});
 }
+
+async function updateIssue(url, newStatus) {
+	return await fetch(url, {
+		method: "PATCH",
+		body: JSON.stringify({ status: newStatus }),
+	});
+}
+
+export {updateIssue};
